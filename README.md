@@ -1,2 +1,2 @@
-# quest-for-thiccness
-This is where your quest for thiccness begins 
+# Quest for Thiccness
+This a free GYM webb app that is hosted on GitHub pages (huge shoutout to those mofos repstect!). 

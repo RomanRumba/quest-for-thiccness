@@ -1,0 +1,25 @@
+<div class="col-12 p-0 excersize-container">
+    <p-table [value]="excersizes" responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '20rem'}"
+             selectionMode="multiple" [(selection)]="selectedExcersizes" dataKey="id" >
+        <ng-template pTemplate="caption">
+            Available Exersises
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr >
+                <th>Name</th>
+                <th>Targets</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-excersize let-columns="columns" let-rowIndex="rowIndex">
+            <tr [pSelectableRow]="excersize" [pSelectableRowIndex]="rowIndex">
+                <td><span class="p-column-title"><strong>Name</strong></span>{{excersize.name}}</td>
+                <td><span class="p-column-title"><strong>Targets</strong></span> <span><p-tag *ngFor="let muscle of excersize.target" value="{{muscle}}" styleClass="mr-1"></p-tag></span></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="col-10 md:col-12 stikky-action">
+    <p-speedDial [model]="actions" direction="up" [transitionDelay]="80" ></p-speedDial>
+</div>
+

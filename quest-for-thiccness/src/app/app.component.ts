@@ -15,9 +15,19 @@ export class AppComponent {
       this.items = 
       [
         {
-          label:'Home',
+          label:'Exercises',
           icon:'pi pi-home',
-          routerLink: ['/home']
+          routerLink: ['/exercises']
+        },
+        {
+          label:'My Programs',
+          icon:'pi pi-book',
+          routerLink: ['/myprograms']
+        },
+        {
+          label:'Setttings',
+          icon:'pi pi-cog',
+          routerLink: ['/settings']
         }
       ];
   }

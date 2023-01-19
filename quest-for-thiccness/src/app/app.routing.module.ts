@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-
+import { MyprogramsComponent } from './pages/myprograms/myprograms.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 /**
  * Routes which this web app provoides, this is a top-to-bottom scheme 
  * meaning when a request comes in it will start from the top and return the first instance that matched the request.
@@ -9,7 +10,9 @@ import { HomeComponent } from './pages/home/home.component';
 const routes: Routes = 
 [  
    { path: '', component: HomeComponent },
-   { path: 'home', component: HomeComponent },
+   { path: 'exercises', component: HomeComponent },
+   { path: 'settings', component: SettingsComponent},
+   { path: 'myprograms', component: MyprogramsComponent}
 ]
 
 @NgModule({  imports: [RouterModule.forRoot(routes)],  
@@ -23,5 +26,7 @@ export class AppRoutingModule { }
  * this way we do not have to add page-component imports in two different places.
  */
 export const RoutingComponents = [  
-    HomeComponent
+    HomeComponent,
+    MyprogramsComponent,
+    SettingsComponent
 ]

@@ -20,18 +20,39 @@ import {InputTextModule} from 'primeng/inputtext';
 import {SpeedDialModule} from 'primeng/speeddial';
 import {TooltipModule} from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import {CheckboxModule} from 'primeng/checkbox';
+import {AccordionModule} from 'primeng/accordion';
+import {CardModule} from 'primeng/card';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {TabViewModule} from 'primeng/tabview';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {KnobModule} from 'primeng/knob';
+
 // my imports
 import { AppComponent } from './app.component';
 import { AppRoutingModule, RoutingComponents } from './app.routing.module';
 import { CommonService } from './services/commonService';
+import { ExcersizeformComponent } from './components/excersizeform/excersizeform.component';
+import { CommonModule } from '@angular/common';
+import { ExcersizeComponent } from './components/excersize/excersize.component';
+import { VirginComponent } from './components/virgin/virgin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RoutingComponents
+    RoutingComponents,
+    ExcersizeformComponent,
+    ExcersizeComponent,
+    VirginComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule, // our Routing module
     BrowserAnimationsModule,
     HttpClientModule,
@@ -52,7 +73,19 @@ import { CommonService } from './services/commonService';
     ProgressBarModule,
     SpeedDialModule,
     TooltipModule,
-    TagModule
+    TagModule,
+    DynamicDialogModule,
+    CheckboxModule,
+    AccordionModule,
+    CardModule,
+    ConfirmPopupModule,
+    ToggleButtonModule,
+    InputTextareaModule,
+    MessagesModule,
+    MessageModule,
+    TabViewModule,
+    ProgressSpinnerModule,
+    KnobModule
   ],
   providers: [CommonService],
   bootstrap: [AppComponent]

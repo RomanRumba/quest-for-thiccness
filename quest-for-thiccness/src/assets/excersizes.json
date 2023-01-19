@@ -2,16 +2,41 @@
     {
         "id":"b9fbc90c-eaf6-46bc-8ba4-20e9a2aa9a67",
         "name":"Dumbell Curls",
-        "target" : [ "Biceps", "yourmom", "you" ]
+        "target" : [ "Biceps" ]
     },
     {
         "id":"ab4a452e-33b2-4b85-971a-87ad91a76851",
-        "name":"Dumbell Curls",
-        "target" : [ "Biceps" ]
+        "name":"Bench press",
+        "target" : [ "Chest", "Front Delts", "Triceps" ]
     },
     {
         "id":"8ab66b02-86e4-4b9e-a6f9-606a913b8e0a",
-        "name":"Dumbell Curls",
-        "target" : [ "Biceps" ]
+        "name":"Straight bar dips",
+        "target" : [ "Chest", "Shoulders", "Triceps" ]
+    },
+    {
+        "id":"a1632d1d-c247-473d-a1bd-25eb7d06dc56",
+        "name":"Ez bar skull crusher",
+        "target" : [ "Triceps" ]
+    },
+    {
+        "id":"18ae6848-9794-4b59-85da-7d62f4a323ec",
+        "name":"Shoulder rugs",
+        "target" : [ "Traps" ]
+    },
+    {
+        "id":"ddd791de-f5f9-401d-9717-71046e855dbd",
+        "name":"Deadlift",
+        "target" : [  "Glutes", "Hamstrings", "Core", "Back", "Trapezius"  ]
+    },
+    {
+        "id":"db9bc22b-10e5-4ede-87da-fd46c6dc7e9c",
+        "name":"Chinups",
+        "target" : [  "Back", "Biceps" ]
+    },
+    {
+        "id":"f185fd02-9952-49cb-9821-c7499d1c5404",
+        "name":"Toe raises",
+        "target" : [  "Calves" ]
     }
 ]

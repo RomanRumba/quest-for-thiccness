@@ -3,4 +3,7 @@
 *
 !.gitignore
 !3rdpartylicenses.txt
-!color\.*\.txt
+!color.*.png
+!hue.*.png
+!main.*.js
+!polyfills.*.js

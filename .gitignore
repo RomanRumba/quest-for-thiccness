@@ -4,6 +4,7 @@
 !.gitignore
 !/assets
 !/assets/*
+!/assets/tutorial/*
 !3rdpartylicenses.txt
 !color.*.png
 !hue.*.png

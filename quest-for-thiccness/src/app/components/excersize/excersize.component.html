@@ -1,0 +1,97 @@
+<p-confirmPopup></p-confirmPopup>
+<p-toast></p-toast>
+<div class="col-12 p-0" style="overflow-y: scroll; overflow-x: hidden;" *ngIf="!loading">
+    <p-tabView styleClass="p-0" [(activeIndex)]="activeExersize" [scrollable]="true">
+        <p-tabPanel *ngFor="let exesice of program.exesices;" [header]="getExersizeName(exesice.exesiceID)" >
+            <div class="grid col-12 p-0" *ngIf="getExersizeName(exesice.exesiceID) as currentExersizeName">
+                <div class="col-12 p-0" *ngIf="exesice.resourceUrl !== ''">
+                    <img *ngIf="exesice.resourceUrl.includes('www.youtube') !== true && exesice.resourceUrl.includes('youtu.be') !== true" width="100%" height="215px" [src]="exesice.resourceUrl">
+                    <iframe *ngIf="exesice.resourceUrl.includes('www.youtube') === true || exesice.resourceUrl.includes('youtu.be') === true" width="100%" height="215px" [src]="sanitizer.bypassSecurityTrustResourceUrl(exesice.resourceUrl)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <div class="col-12 p-0 flex justify-content-center">
+                    <h2>{{currentExersizeName}}</h2>
+                </div>
+                <div class="col-12 p-0" *ngIf="exersizeFinished[exesice.exesiceID] === true">
+                    <p-message severity="success" text="You already finished this exercise" styleClass="col-12"></p-message>
+                </div>
+                <div class="col-12 p-0">
+                    {{exesice.notes}}
+                </div>
+                <div class="col-12 p-0 mt-3 flex justify-content-center" *ngIf="showTimer"> 
+                    <span>
+                        <p-knob [(ngModel)]="restTimeCounter" [size]="150" [max]="currentMaxRestTime"></p-knob>
+                        <div class="flex justify-content-between" *ngIf="isRestTimer">
+                            <button pButton pRipple label="-15s" class="customTimeBasedButton" (click)="addToRestTime(-15)"></button>
+                            Rest
+                            <button pButton pRipple label="+15s" class="customTimeBasedButton" (click)="addToRestTime(15)"></button>
+                        </div>
+                    </span>
+                </div>
+                <div class="col-12 p-0 mt-3"  *ngIf="exesice.isSetBased === true; else isNotSetBased">
+                    <strong class="pb-2">Sets:</strong>
+                    <div class="mb-2" *ngFor="let setToPerform of exesice.sets;">
+                        <span>
+                            <strong>Reps:</strong> {{setToPerform.repsOrMin}}
+                            <strong>Weight:</strong> {{setToPerform.weightOrSec}}Kg
+                            <strong>Rest:</strong> {{setToPerform.pause}}Sec
+                            <p-checkbox *ngIf="currentExersizeID === exesice.exesiceID || setsTracker[setToPerform.setId] === true" styleClass="ml-2" name="{{setToPerform.setId}}" [binary]="true" [(ngModel)]="setsTracker[setToPerform.setId]" [disabled]="setsTracker[setToPerform.setId] || showTimer" (onChange)="setFinished(exesice.exesiceID,setToPerform.setId)" ></p-checkbox>
+                        </span>
+                    </div>
+                </div>
+                <ng-template #isNotSetBased>
+                    <div class="col-12 p-0 mt-3">
+                        <strong class="pb-2">Sets:</strong>
+                        <div class="mb-2" *ngFor="let setToPerform of exesice.sets;">
+                            <span>
+                                <strong>Min:</strong> {{setToPerform.repsOrMin}}
+                                <strong>Sec:</strong> {{setToPerform.weightOrSec}}
+                                <strong>Rest:</strong> {{setToPerform.pause}}Sec
+                                <button [disabled]="setsTracker[setToPerform.setId] || showTimer" *ngIf="currentExersizeID === exesice.exesiceID && setsTracker[setToPerform.setId] === false" pButton pRipple label="Start" class="customTimeBasedButton p-button-success" (click)="startTimeBasedSet(exesice.exesiceID,setToPerform.setId)" ></button>
+                                <p-checkbox *ngIf="setsTracker[setToPerform.setId]" styleClass="ml-2" name="{{setToPerform.setId}}" [binary]="true" [(ngModel)]="setsTracker[setToPerform.setId]" [disabled]="setsTracker[setToPerform.setId] || showTimer" (onChange)="setFinished(exesice.exesiceID,setToPerform.setId)" ></p-checkbox>
+                            </span>
+                        </div>
+                    </div>
+                </ng-template>
+                <div class="grid col-12 p-0 mt-3" *ngIf="showUpdateForm && exersizeIDToUpdate === exesice.exesiceID">
+                    <div class="col-12 p-0 mb-4 p-float-label ml-1 ">
+                        <p-message severity="info" text="Do want to change intensity of this set for the future?" styleClass="col-12"></p-message>
+                    </div>
+                    <div class="grid col-12 ml-1">
+                        <div class="col-4 p-float-label">
+                            <input [(ngModel)]="repsOrMin" min="0" style="width: 100%;" type="number" id="repsOrMin" class="p-inputtext-sm" pInputText />
+                            <label for="repsOrMin">
+                                <span *ngIf="exesice.isSetBased === true; else isMinImp">Reps</span>
+                                <ng-template #isMinImp>Min</ng-template>
+                            </label>
+                        </div>
+                        <div class="col-4 p-float-label">
+                            <input [(ngModel)]="weightOrSec" min="0" style="width: 100%;" type="number" id="weightOrSec" class="p-inputtext-sm" pInputText />
+                            <label for="weightOrSec">
+                                <span *ngIf="exesice.isSetBased === true; else isSecImp">Weight</span>
+                                <ng-template #isSecImp>Sec</ng-template>
+                            </label>
+                        </div>
+                        <div class="col-4 p-float-label ">
+                            <input [(ngModel)]="rest" min="0" style="width: 100%;" type="number" id="rest" class="p-inputtext-sm" pInputText />
+                            <label for="rest">Rest</label>
+                        </div>
+                    </div>
+                    <div class="grid col-12 p-0 ml-1">
+                       <div class="col-6">
+                            <button (click)="updateMyCurrentSet()" style="width: 100%;" pButton pRipple type="button" label="Save" class="p-button-raised p-button-sm p-button-success"></button>
+                       </div>
+                       <div class="col-6">
+                            <button (click)="clearUpdateSet()" style="width: 100%;" pButton pRipple type="button" label="Skip" class="p-button-raised p-button-sm p-button-danger"></button>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-12 p-0 mt-3" *ngIf="exersizeFinished[exesice.exesiceID] === false">
+                    <button *ngIf="currentExersizeID === '' || currentExersizeID !== exesice.exesiceID" (click)="startOnExersize($event, exesice.exesiceID)" style="width: 100%;" pButton pRipple type="button" label="Start on {{currentExersizeName}}" class="p-button-raised p-button-sm p-button-success"></button>
+                </div>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<div class="col-12 p-0 flex justify-content-center" *ngIf="loading">
+    <p-progressSpinner></p-progressSpinner>
+</div>

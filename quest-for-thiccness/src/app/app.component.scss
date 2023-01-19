@@ -1,0 +1,5 @@
+// I dont like PrimeNgs radius on menu bars so we remove it
+:host ::ng-deep .p-menubar
+{
+    border-radius: 0px !important;
+}

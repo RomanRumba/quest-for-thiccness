@@ -1,0 +1,44 @@
+<p-toast></p-toast>
+<div class="col-12 p-0 excersize-container">
+    <p-table #dt [value]="excersizes" responsiveLayout="stack" [breakpoint]="'960px'" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '20rem'}"
+             selectionMode="multiple" [(selection)]="selectedExcersizes" dataKey="id" [globalFilterFields]="['name','target']">
+        <ng-template pTemplate="caption">
+            <div class="grid">
+                <div class="col-12 md:col-4 p-0">
+                    <p class="pt-1 pl-3">Available Exercises</p>
+                </div>
+                <div class="grid col-12 pb-0">
+                   <div class="col-4 ml-2">
+                       <p-dropdown styleClass="p-inputtext-sm" (onChange)="clearSearch()" [options]="searchAbleExersizeFields" [(ngModel)]="selectedSearchField" optionLabel="field"></p-dropdown>
+                    </div>
+                    <div class="col-7">
+                        <span class="p-input-icon-left " style="margin-left: -0.5em;">
+                            <i class="pi pi-search"></i>
+                            <input class="p-inputtext-sm" pInputText type="text" [(ngModel)]="currentSearchString" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search by {{selectedSearchField.field}}" />
+                        </span>
+                   </div>
+                </div>
+                <div class="col-12 pt-0 pb-0 pl-3 pr-3" *ngIf="selectedExcersizes.length === 0">
+                    <p-message icon="pi pi-info-circle" severity="info" text="Tap on exercises and use the bottom right action button to create new programs" styleClass="mr-2 col-12"></p-message>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr >
+                <th>Name</th>
+                <th>Targets</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-excersize let-columns="columns" let-rowIndex="rowIndex">
+            <tr [pSelectableRow]="excersize" [pSelectableRowIndex]="rowIndex">
+                <td><span class="p-column-title"><strong>Name</strong></span>{{excersize.name}}</td>
+                <td><span class="p-column-title"><strong>Targets</strong></span> <span><p-tag *ngFor="let muscle of excersize.target" value="{{muscle}}" severity="info" styleClass="mr-1"></p-tag></span></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="col-10 md:col-12 stikky-action" >
+    <p-speedDial buttonClassName="p-button-secondary" [model]="actions" direction="up" [transitionDelay]="80" showIcon="pi pi-cog" hideIcon="pi pi-times"></p-speedDial>
+</div>
+

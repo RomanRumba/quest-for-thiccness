@@ -1,0 +1,26 @@
+[
+    {
+        "name":"Upper Chest",
+        "group" :"Chest"
+    },
+    {
+        "name":"Middle Chest",
+        "group" :"Chest"
+    },
+    {
+        "name":"Lower Chest",
+        "group" :"Chest"
+    },
+    {
+        "name":"Biceps",
+        "group" :"Hands"
+    },
+    {
+        "name":"Triceps",
+        "group" :"Hands"
+    },
+    {
+        "name":"Deltoid",
+        "group" :"Hands"
+    }
+]

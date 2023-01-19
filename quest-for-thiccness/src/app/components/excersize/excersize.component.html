@@ -52,6 +52,39 @@
                         </div>
                     </div>
                 </ng-template>
+                <div class="grid col-12 p-0 mt-3" *ngIf="showUpdateForm && exersizeIDToUpdate === exesice.exesiceID">
+                    <div class="col-12 p-0 mb-4 p-float-label ml-1 ">
+                        <p-message severity="info" text="Do want to change intensity of this set for the future?" styleClass="col-12"></p-message>
+                    </div>
+                    <div class="grid col-12 ml-1">
+                        <div class="col-4 p-float-label">
+                            <input [(ngModel)]="repsOrMin" min="0" style="width: 100%;" type="number" id="repsOrMin" class="p-inputtext-sm" pInputText />
+                            <label for="repsOrMin">
+                                <span *ngIf="exesice.isSetBased === true; else isMinImp">Reps</span>
+                                <ng-template #isMinImp>Min</ng-template>
+                            </label>
+                        </div>
+                        <div class="col-4 p-float-label">
+                            <input [(ngModel)]="weightOrSec" min="0" style="width: 100%;" type="number" id="weightOrSec" class="p-inputtext-sm" pInputText />
+                            <label for="weightOrSec">
+                                <span *ngIf="exesice.isSetBased === true; else isSecImp">Weight</span>
+                                <ng-template #isSecImp>Sec</ng-template>
+                            </label>
+                        </div>
+                        <div class="col-4 p-float-label ">
+                            <input [(ngModel)]="rest" min="0" style="width: 100%;" type="number" id="rest" class="p-inputtext-sm" pInputText />
+                            <label for="rest">Rest</label>
+                        </div>
+                    </div>
+                    <div class="grid col-12 p-0 ml-1">
+                       <div class="col-6">
+                            <button (click)="updateMyCurrentSet()" style="width: 100%;" pButton pRipple type="button" label="Save" class="p-button-raised p-button-sm p-button-success"></button>
+                       </div>
+                       <div class="col-6">
+                            <button (click)="clearUpdateSet()" style="width: 100%;" pButton pRipple type="button" label="Skip" class="p-button-raised p-button-sm p-button-danger"></button>
+                       </div>
+                    </div>
+                </div>
                 <div class="col-12 p-0 mt-3" *ngIf="exersizeFinished[exesice.exesiceID] === false">
                     <button *ngIf="currentExersizeID === '' || currentExersizeID !== exesice.exesiceID" (click)="startOnExersize($event, exesice.exesiceID)" style="width: 100%;" pButton pRipple type="button" label="Start on {{currentExersizeName}}" class="p-button-raised p-button-sm p-button-success"></button>
                 </div>

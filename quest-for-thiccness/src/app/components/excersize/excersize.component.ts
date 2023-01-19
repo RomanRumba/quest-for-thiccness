@@ -36,6 +36,13 @@ export class ExcersizeComponent
   public restTimeCounter: number = 0;
   public counterRed: any;
 
+  public showUpdateForm:boolean = false;
+  public exersizeSetIDToUpdate: string = "";
+  public exersizeIDToUpdate: string = "";
+  public repsOrMin:number | undefined;
+  public weightOrSec:number | undefined;
+  public rest:number| undefined ;
+
   constructor(private commonService: CommonService,
               private ref: DynamicDialogRef, 
               private config: DynamicDialogConfig,
@@ -62,10 +69,12 @@ export class ExcersizeComponent
     this.loading = false;
   }
 
+  // Need to implement this to remove the timeout counter
   ngOnDestroy() 
   {
     clearTimeout(this.counterRed);
   }
+
   // Fetches the name of the exersize.
   getExersizeName(id:string): string
   {
@@ -73,6 +82,8 @@ export class ExcersizeComponent
     return e? e.name : 'error excersize not found';
   }
 
+  // I learn from the Javascript forefathers where just like in dates 
+  // the only way to subtract is to add a negative integer..... 
   addToRestTime(timeToAdd: number)
   {
     if(this.isRestTimer === true)
@@ -101,6 +112,7 @@ export class ExcersizeComponent
 
   private _startOnExersize(exesiceID : string)
   {
+    this.clearUpdateSet();
     this.currentExersizeID = exesiceID;
     let setsToCheck = this.program.exesices.find(e => e.exesiceID === this.currentExersizeID)?.sets;
     if(setsToCheck && setsToCheck.length > 0)
@@ -177,9 +189,59 @@ export class ExcersizeComponent
     {
       this.exersizeFinished[exersizeId] = true;
       this.messageService.add({severity:'success', summary: 'Exersize finished', detail: "All sets in "});
+      let currentSet = this.program.exesices.find(e => e.exesiceID === exersizeId)?.sets.find(r => r.setId == this.currentExersizeSetID);
+      
+      // Before finish we add this
+      this.repsOrMin = <number>currentSet?.repsOrMin;
+      this.weightOrSec = <number>currentSet?.weightOrSec;
+      this.rest = <number>currentSet?.pause;
+      this.exersizeSetIDToUpdate = <string>currentSet?.setId;
+      this.exersizeIDToUpdate = exersizeId;
+      this.showUpdateForm = true;
+      
       this.currentExersizeID = "";
       this.currentExersizeSetID =""; 
     }
   }
 
+  clearUpdateSet()
+  {
+    this.showUpdateForm = false;
+    this.exersizeSetIDToUpdate = "";
+    this.exersizeIDToUpdate= "";
+    this.repsOrMin = undefined;
+    this.weightOrSec = undefined;
+    this.rest = undefined;
+  }
+
+  updateMyCurrentSet()
+  {
+    let exersizeToUpdate = this.program.exesices.findIndex(e => e.exesiceID === this.exersizeIDToUpdate);
+    if(exersizeToUpdate !== -1)
+    {
+      let setInexersizeToUpdate = this.program.exesices[exersizeToUpdate].sets.findIndex(s => s.setId === this.exersizeSetIDToUpdate);
+      if(setInexersizeToUpdate !== 1)
+      {
+        // we dont want to update this.program because it will mess with the UI.
+        // I have no fucking clue why but object.assign still keeps the references somehow...
+        // this is another way of copying objects.
+        let oldProgram =JSON.parse(JSON.stringify(this.program));
+        this.program.exesices[exersizeToUpdate].sets[exersizeToUpdate].repsOrMin = <number>this.repsOrMin;
+        this.program.exesices[exersizeToUpdate].sets[exersizeToUpdate].weightOrSec = <number>this.weightOrSec;
+        this.program.exesices[exersizeToUpdate].sets[exersizeToUpdate].pause = <number>this.rest;
+        this.commonService.updateProgram(this.program);
+        this.program = oldProgram;
+        this.clearUpdateSet();
+        this.messageService.add({severity:'success', summary: 'Set Updated', detail: "Your set has been updated"});
+      }
+      else
+      {
+        this.messageService.add({severity:'error', summary: 'Something broke??', detail: "System encountered an error please regresh the page, if this percists delete the program"});
+      }
+    }
+    else
+    {
+      this.messageService.add({severity:'error', summary: 'Something broke??', detail: "System encountered an error please regresh the page, if this percists delete the program"});
+    }
+  }
 }

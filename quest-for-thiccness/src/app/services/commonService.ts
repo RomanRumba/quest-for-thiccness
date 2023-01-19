@@ -48,7 +48,7 @@ export class CommonService
         }
         return <Program[]>this.myPrograms;
     }
-
+   
     async getExcersizesInProgram(id: string) : Promise<Excersize[] | Error>
     {
        this.myPrograms = this.getMyPrograms();

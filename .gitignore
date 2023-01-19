@@ -2,8 +2,19 @@
 
 *
 !.gitignore
+!/assets
+!/assets/*
 !3rdpartylicenses.txt
 !color.*.png
 !hue.*.png
 !main.*.js
 !polyfills.*.js
+!favicon.ico
+!index.html
+!primeicons.*.svg
+!primeicons.*.ttf
+!primeicons.*.woff2
+!primeicons.*.woff
+!primeicons.*.eot
+!runtime.*.js
+!styles.*.css

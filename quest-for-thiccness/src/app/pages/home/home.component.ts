@@ -128,7 +128,7 @@ export class HomeComponent implements OnDestroy
   {
     if(this.selectedExcersizes.length <= 0)
     {
-      this.messageService.add({severity:'error', summary: 'no exercises selected', detail: "please select exercises from the 'available exercises' to create a new program."});
+      this.messageService.add({severity:'error', summary: 'no exercises selected', detail: this.insultService.insultOn? this.insultService.getRandomInsultType(1) :"please select exercises from the 'available exercises' to create a new program."});
       return;
     }
 

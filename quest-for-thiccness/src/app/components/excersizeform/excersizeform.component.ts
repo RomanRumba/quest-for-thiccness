@@ -124,7 +124,8 @@ export class ExcersizeformComponent
       this.repsOrMin=undefined;
       this.rest= undefined;
       
-      if(this.insultService.insultOn )
+      // 40% chance to give user an insult
+      if(this.insultService.insultOn && Math.floor(Math.random() * 10) > 4)
       {
         this.messageService.add({severity:'success', summary: '', detail: this.insultService.getRandomInsultType(3)});
       }

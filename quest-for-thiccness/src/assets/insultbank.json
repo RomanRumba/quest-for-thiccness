@@ -1,6 +1,11 @@
 [
+
     {
         "insult":"How can you be so stupid there like 1 thing that you need to fill out???",
+        "type" :"invalform"
+    },
+    {
+        "insult":"You dont have nearly enough muscles to be this stupid",
         "type" :"invalform"
     },
     {
@@ -14,5 +19,17 @@
     {
         "insult":"OOOoooo you must feel so good about yourself right now dont you big boy",
         "type" :"random"
+    },
+    {
+        "insult":"I bet you didn't even finish all these sets legitly you fucking liar",
+        "type" :"finishedSet"
+    },
+    {
+        "insult":"Maybe just maybe if you add a couple of more sets you mommy will love you",
+        "type" :"updateSet"
+    },
+    {
+        "insult":"You fucking weakling, I bet you didn't even finish this set legitly",
+        "type" :"declineUpdateSet"
     }
 ]

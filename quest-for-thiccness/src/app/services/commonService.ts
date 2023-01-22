@@ -11,6 +11,9 @@ import { Program } from '../models/program';
 export class CommonService 
 {
     public readonly BASEULR = "http://192.168.50.130:4200/";
+    public readonly EXERSIZEDBURL = "http://192.168.50.130:4200/assets/excersizes.json";
+    
+
     private readonly FIRSTTIMEKEY = "MYFIRSTTIME";
     private readonly PROGRAMSKEY = "MYPROGRAMS";
     private readonly DEFAULTPAGEKEY = "DEFAULTPAGE";
@@ -26,7 +29,7 @@ export class CommonService
         {
            return this.availableExersizes;
         }
-        this.availableExersizes = await lastValueFrom(this.http.get<Excersize[]>('assets/excersizes.json'));
+        this.availableExersizes = await lastValueFrom(this.http.get<Excersize[]>(this.EXERSIZEDBURL));
         return this.availableExersizes;
     }
 

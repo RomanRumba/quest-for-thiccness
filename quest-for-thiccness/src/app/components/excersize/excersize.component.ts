@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Excersize } from 'src/app/models/excersize';
 import { ExcersizeformConfig } from 'src/app/models/modals/ExcersizeformConfig';
 import { Program } from 'src/app/models/program';
 import { CommonService } from 'src/app/services/commonService';
+import { InsultService } from 'src/app/services/insultService';
 
 @Component({
   selector: 'app-excersize',
@@ -43,13 +44,21 @@ export class ExcersizeComponent
   public weightOrSec:number | undefined;
   public rest:number| undefined ;
 
+  // There is an issue with IFRAMES inside tabs, basically when a change occurs in the 
+  // component the sanitizer.bypassSecurityTrustResourceUrl function needs to re-run which is techinically fine
+  // but whats not fine is that it will be seen as a new url so the IFrame will "re-render"
+  // and the user will see some flickering, so the solutin is to generate static urls
+  // so the Iframe wont "re-render"
+  public exersizeYoutubeUrls: {[key: string]: SafeResourceUrl}= {};
+
   constructor(private commonService: CommonService,
               private ref: DynamicDialogRef, 
               private config: DynamicDialogConfig,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               public cdRef:ChangeDetectorRef,
-              public sanitizer: DomSanitizer) { }
+              public sanitizer: DomSanitizer,
+              public insultService: InsultService) { }
 
   ngOnInit() 
   {
@@ -58,6 +67,11 @@ export class ExcersizeComponent
     this.program = (<ExcersizeformConfig>this.config.data).program;
     this.program.exesices.forEach(exesice => 
     {
+      if(exesice.resourceUrl !== null && (exesice.resourceUrl.includes('www.youtube') === true || exesice.resourceUrl.includes('youtu.be') === true))
+      {
+        this.exersizeYoutubeUrls[exesice.exesiceID] = this.sanitizer.bypassSecurityTrustResourceUrl(exesice.resourceUrl);
+      }
+
       this.exersizeFinished[exesice.exesiceID] = false;
       exesice.sets.forEach(settoAdd => 
       {
@@ -188,7 +202,6 @@ export class ExcersizeComponent
     if(isFinished)
     {
       this.exersizeFinished[exersizeId] = true;
-      this.messageService.add({severity:'success', summary: 'Exersize finished', detail: "All sets in "});
       let currentSet = this.program.exesices.find(e => e.exesiceID === exersizeId)?.sets.find(r => r.setId == this.currentExersizeSetID);
       
       // Before finish we add this
@@ -202,6 +215,15 @@ export class ExcersizeComponent
       this.currentExersizeID = "";
       this.currentExersizeSetID =""; 
     }
+  }
+
+  skipUpdateSet()
+  {
+    if(this.insultService.insultOn && Math.floor(Math.random() * 10) > 4)
+    {
+      this.messageService.add({severity:'success', summary: '', detail: this.insultService.getRandomInsultType(6)});
+    }
+    this.clearUpdateSet();
   }
 
   clearUpdateSet()
@@ -232,7 +254,13 @@ export class ExcersizeComponent
         this.commonService.updateProgram(this.program);
         this.program = oldProgram;
         this.clearUpdateSet();
-        this.messageService.add({severity:'success', summary: 'Set Updated', detail: "Your set has been updated"});
+        if(this.insultService.insultOn && Math.floor(Math.random() * 10) > 4)
+        {
+          this.messageService.add({severity:'success', summary: '', detail: this.insultService.getRandomInsultType(5)});
+        }
+        else {
+          this.messageService.add({severity:'success', summary: 'Set Updated', detail: "Your set has been updated"});
+        }
       }
       else
       {

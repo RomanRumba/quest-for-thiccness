@@ -8,14 +8,18 @@ import { lastValueFrom } from 'rxjs';
 })
 export class InsultService 
 {
-   private insultTypes : string[] = 
-   [
-    "exersizeinfo",
-    "invalform",
-    "invalidval",
-    "random"
-   ]
+   private readonly INSULTDBURL = "http://192.168.50.130:4200/assets/insultbank.json";
    private readonly ISUSERPUSSY = "ISUSERPUSSY";
+   private readonly insultTypes : string[] = 
+   [
+    "exersizeinfo",     // 0
+    "invalform",        // 1
+    "invalidval",       // 2
+    "random",           // 3
+    "finishedSet",      // 4 
+    "updateSet",        // 5
+    "declineUpdateSet"  // 6
+   ]
    private insultBank: Insult[] = [];
    public insultOn : boolean = false;
    
@@ -67,7 +71,7 @@ export class InsultService
        {
           return this.insultBank;
        }
-       this.insultBank = await lastValueFrom(this.http.get<Insult[]>('assets/insultbank.json'));
+       this.insultBank = await lastValueFrom(this.http.get<Insult[]>(this.INSULTDBURL));
        return this.insultBank;
    }
 

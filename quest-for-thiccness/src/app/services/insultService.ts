@@ -31,7 +31,7 @@ export class InsultService
      let isUserAPussy = localStorage.getItem(this.ISUSERPUSSY);   
      if(isUserAPussy === null)
      {
-        this.insultOn = true;
+        this.insultOn = false;
      }
      else
      {

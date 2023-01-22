@@ -1,1 +1,58 @@
-<p>settings works!</p>
+<div class="grid ml-1">
+    <div class="col-12">
+        <h2>Default starting page</h2>
+    </div>
+    <div class="col-12 pt-0">
+        <div class="field-radiobutton">
+            <p-radioButton name="No" value="exercises" [(ngModel)]="selectedDefaultPage" inputId="defaultpage1" (onClick)="commonService.updateDefaultPage('exercises')"></p-radioButton>
+            <label for="defaultpage1">Exercises</label>
+        </div>
+        <div class="field-radiobutton">
+            <p-radioButton name="Yes" value="myprograms" [(ngModel)]="selectedDefaultPage" inputId="defaultpage2" (onClick)="commonService.updateDefaultPage('myprograms')"></p-radioButton>
+            <label for="defaultpage2">My Programs</label>
+        </div>
+        <div class="field-radiobutton">
+            <p-radioButton name="Yes" value="settings" [(ngModel)]="selectedDefaultPage" inputId="defaultpage3" (onClick)="commonService.updateDefaultPage('settings')"></p-radioButton>
+            <label for="defaultpage3">Settings? (why would you??)</label>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <h2>Themes</h2>
+    </div>
+    <div class="col-12 pt-0">
+        <div *ngFor="let theme of themeService.themeNames" class="field-checkbox">
+            <p-radioButton [inputId]="theme.friendlyName" name="{{theme.friendlyName}}" [value]="theme.themeName" [(ngModel)]="selectedTheme" (onClick)="themeService.switchTheme(theme.themeName)" ></p-radioButton>
+            <label [for]="theme.friendlyName">{{theme.friendlyName}}</label>
+        </div>
+    </div>
+    <div class="col-12">
+        <h2>Enable Insults</h2>
+    </div>
+    <div class="col-12 pt-0">
+        <div class="field-radiobutton">
+            <p-radioButton name="No" value="false" [(ngModel)]="selectedInsultSetting" inputId="insult1" (onClick)="changeInsultSetting('false')"></p-radioButton>
+            <label for="insult1">No, I am fragile</label>
+        </div>
+        <div class="field-radiobutton">
+            <p-radioButton name="Yes" value="true" [(ngModel)]="selectedInsultSetting" inputId="insult2" (onClick)="changeInsultSetting('true')"></p-radioButton>
+            <label for="insult2">Yes</label>
+        </div>
+    </div>
+
+    <!--
+    <div class="col-12">
+        <div class="col-12 p-0">
+            <h2>Custom Exercises bank</h2>
+            <div style="width: 95%;">
+                <p-message icon="pi pi-info-circle" severity="info" text="This is for advanced users!! You can create your own 
+                exercise bank and then Copy-paste the link to that bank here, the system will attempt to fetch that bank instead of the default one" styleClass="col-12"></p-message>   
+            </div>
+        </div>
+        <span class="col-12 p-0 p-float-label mt-4">
+            <input style="width: 95%;" type="text" id="programName" pInputText (change)="test()"> 
+            <label for="programName">Link to bank</label>
+        </span>
+    </div>
+    -->
+</div>

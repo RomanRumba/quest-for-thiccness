@@ -9,17 +9,18 @@
                 </div>
                 <div class="grid col-12 pb-0">
                    <div class="col-4 ml-2">
-                       <p-dropdown styleClass="p-inputtext-sm" (onChange)="clearSearch()" [options]="searchAbleExersizeFields" [(ngModel)]="selectedSearchField" optionLabel="field"></p-dropdown>
+                       <p-dropdown styleClass="p-inputtext-sm col-12 p-0" (onChange)="clearSearch()" [options]="searchAbleExersizeFields" [(ngModel)]="selectedSearchField" optionLabel="field"></p-dropdown>
                     </div>
                     <div class="col-7">
-                        <span class="p-input-icon-left " style="margin-left: -0.5em;">
+                        <!-- Somekind of bug where i cant get the input fit the parrent this is why width is 120%-->
+                        <span class="p-input-icon-left " style="margin-left: -0.5em; width: 120%;">
                             <i class="pi pi-search"></i>
-                            <input class="p-inputtext-sm" pInputText type="text" [(ngModel)]="currentSearchString" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search by {{selectedSearchField.field}}" />
+                            <input class="p-inputtext-sm col-12 " pInputText type="text" [(ngModel)]="currentSearchString" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search by {{selectedSearchField.field}}" />
                         </span>
                    </div>
                 </div>
                 <div class="col-12 pt-0 pb-0 pl-3 pr-3" *ngIf="selectedExcersizes.length === 0">
-                    <p-message icon="pi pi-info-circle" severity="info" text="Tap on exercises and use the bottom right action button to create new programs" styleClass="mr-2 col-12"></p-message>
+                    <p-message icon="pi pi-info-circle" severity="info" text="{{insultService.insultOn? insultService.getRandomInsultType(0):'Tap on exercises and use the bottom right action button to create new programs'}}" styleClass="mr-2 col-12"></p-message>
                 </div>
             </div>
         </ng-template>

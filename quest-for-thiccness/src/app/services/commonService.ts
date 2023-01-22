@@ -10,8 +10,10 @@ import { Program } from '../models/program';
 })
 export class CommonService 
 {
+    public readonly BASEULR = "http://192.168.50.130:4200/";
     private readonly FIRSTTIMEKEY = "MYFIRSTTIME";
     private readonly PROGRAMSKEY = "MYPROGRAMS";
+    private readonly DEFAULTPAGEKEY = "DEFAULTPAGE";
 
     private availableExersizes : Excersize[] = [];
     private myPrograms: Program[] | null = null;
@@ -24,7 +26,6 @@ export class CommonService
         {
            return this.availableExersizes;
         }
-        this.http.get<Excersize[]>('assets/excersizes.json');
         this.availableExersizes = await lastValueFrom(this.http.get<Excersize[]>('assets/excersizes.json'));
         return this.availableExersizes;
     }
@@ -110,6 +111,22 @@ export class CommonService
             throw Error("Program with ID " + id + " not found in your database")
         }
         return <Program[]>this.myPrograms;
+    }
+
+    //--------------- Default Page stuff ---------------
+    getDefaultPage(): string
+    {
+        let defaultPage = localStorage.getItem(this.DEFAULTPAGEKEY);
+        if(defaultPage === null)
+        {
+            return "exercises";
+        }
+        return defaultPage;
+    }
+
+    updateDefaultPage(newDefaultPage:string)
+    {
+        localStorage.setItem(this.DEFAULTPAGEKEY,newDefaultPage);
     }
 
     //--------------- Helper functions-----------------

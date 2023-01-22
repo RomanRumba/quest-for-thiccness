@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import {  Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { CommonService } from './services/commonService';
+import { InsultService } from './services/insultService';
+import { ThemeService } from './services/themeService';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +11,22 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Quest for Thiccness';
+  public title = 'Quest for Thiccness';
+  public items: MenuItem[] = [];
+  
+  constructor(private themeService: ThemeService,
+              private insultService: InsultService,
+              private commonService: CommonService,
+              private route: Router)
+  {
+    this.themeService.loadSavedTheme();
+  }
 
-  items: MenuItem[] = [];
-
-  ngOnInit() {
+  ngOnInit() 
+  {
+    this.insultService.loadInsultBankIfNeed()
+    .then(() => 
+    {
       this.items = 
       [
         {
@@ -30,5 +45,12 @@ export class AppComponent {
           routerLink: ['/settings']
         }
       ];
+
+      let defaultPageCheck = this.commonService.getDefaultPage();
+      if(defaultPageCheck !== "exercises")
+      {
+        this.route.navigate(["/"+defaultPageCheck]);
+      }
+    });
   }
 }

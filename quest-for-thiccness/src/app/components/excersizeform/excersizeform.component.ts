@@ -5,6 +5,7 @@ import { Excersize } from 'src/app/models/excersize';
 import { ExcersizeformConfig } from 'src/app/models/modals/ExcersizeformConfig';
 import { Program } from 'src/app/models/program';
 import { CommonService } from 'src/app/services/commonService';
+import { InsultService } from 'src/app/services/insultService';
 
 @Component({
   selector: 'app-excersizeform',
@@ -35,7 +36,8 @@ export class ExcersizeformComponent
               private ref: DynamicDialogRef, 
               private config: DynamicDialogConfig,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService) { }
+              private confirmationService: ConfirmationService,
+              public insultService: InsultService) { }
 
   ngOnInit() 
   {
@@ -71,7 +73,7 @@ export class ExcersizeformComponent
     if(typeof(this.program.name) === "undefined" ||
       (typeof(this.program.name) !== "undefined" && this.program.name.trim().length === 0))
     {
-      this.messageService.add({severity:'error', summary: '', detail: "please fill out set information"});
+      this.messageService.add({severity:'error', summary: '', detail: this.insultService.insultOn? this.insultService.getRandomInsultType(1): "please fill out set information"});
       return;
     }
     this.commonService.saveNewProgram(this.program);
@@ -84,7 +86,7 @@ export class ExcersizeformComponent
     if(typeof(this.program.name) === "undefined" ||
       (typeof(this.program.name) !== "undefined" && this.program.name.trim().length === 0))
     {
-      this.messageService.add({severity:'error', summary: '', detail: "please fill out set information"});
+      this.messageService.add({severity:'error', summary: '', detail: this.insultService.insultOn? this.insultService.getRandomInsultType(1): "please fill out set information"});
       return;
     }
     this.commonService.updateProgram(this.program);
@@ -103,7 +105,7 @@ export class ExcersizeformComponent
   {
     if(typeof(this.repsOrMin) === "undefined" && typeof(this.weightOrSec) === "undefined")
     {
-      this.messageService.add({severity:'error', summary: 'cant add empty set', detail: "please fill out set information"});
+      this.messageService.add({severity:'error', summary: 'cant add empty set', detail: this.insultService.insultOn? this.insultService.getRandomInsultType(2): "please fill out set information"});
       return;
     }
 
@@ -121,6 +123,11 @@ export class ExcersizeformComponent
       this.weightOrSec = undefined;
       this.repsOrMin=undefined;
       this.rest= undefined;
+      
+      if(this.insultService.insultOn )
+      {
+        this.messageService.add({severity:'success', summary: '', detail: this.insultService.getRandomInsultType(3)});
+      }
     }
   }
 

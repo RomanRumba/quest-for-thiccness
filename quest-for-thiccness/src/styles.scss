@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+// most CSS libraries i choose use this variable as default background color
+// this is done so the background color makes it look like the components strech all the way to the bottom of the screen
+body
+{   
+    background-color: var(--surface-card) !important;
+}

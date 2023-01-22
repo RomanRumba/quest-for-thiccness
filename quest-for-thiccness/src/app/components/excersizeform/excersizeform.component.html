@@ -42,7 +42,7 @@
     <div class="col-12 p-0 mt-3">
         <p-accordion styleClass="customAccordion"  (onOpen)="clearFormData($event)">
             <p-accordionTab *ngFor="let exesices of program.exesices" header="{{getExersizeName(exesices.exesiceID)}}">
-                <div class="col-12 p-0 flex justify-content-end flex-wrap">
+                <div class="col-12 p-0 flex justify-content-end flex-wrap" style="margin-left: 0.7em;">
                     <div class="col-10 p-0">
                         <p-toggleButton styleClass="p-button-sm col-12" [(ngModel)]="exesices.isSetBased" onLabel="Set based" offLabel="Time based" onIcon="pi pi-bars" offIcon="pi pi-clock" ></p-toggleButton>
                     </div>
@@ -50,8 +50,8 @@
                         <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
                     </div>
                 </div>
-                <div class="col-12 p-0 mt-4 ml-3">
-                    <div class="grid col-12 p-0 pt-3" *ngFor="let currSet of exesices.sets; let i = index">
+                <div class="col-12 p-0 mt-4">
+                    <div class="grid col-12 p-0 mt-5 ml-4" *ngFor="let currSet of exesices.sets; let i = index">
                         <div class="col-3 p-0 ml-1 p-float-label">
                             <input [(ngModel)]="currSet.repsOrMin" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_repsOrMin_{{i}}" class="p-inputtext-sm" pInputText />
                             <label for="{{exesices.exesiceID}}_repsOrMin_{{i}}" *ngIf=" i === 0">
@@ -76,8 +76,8 @@
                     </div>
                 </div>
 
-                <div class="col-12 p-0 mt-4 ml-3">
-                    <div class="grid col-12 p-0 mt-5">
+                <div class="col-12 p-0 mt-4">
+                    <div class="grid col-12 p-0 mt-5 ml-4" >
                         <div class="col-3 p-0 p-float-label ml-1 ">
                             <input [(ngModel)]="repsOrMin" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_repsOrMin" class="p-inputtext-sm" pInputText />
                             <label for="{{exesices.exesiceID}}_repsOrMin">
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="col-12 p-0 mt-5">
-                        <span class="p-float-label pr-2">
+                        <span class="p-float-label">
                             <textarea  [(ngModel)]="exesices.notes" style="width: 100%;" id="{{exesices.exesiceID}}_notes" rows="3" pInputTextarea [autoResize]="true"></textarea>
                             <label for="{{exesices.exesiceID}}_notes">Notes</label>
                         </span>
@@ -110,7 +110,7 @@
                         <p-message severity="info" icon="pi pi-info-circle" text="Copy-paste an URL to a GIF, Image, or a youtube video. NOTE: use Embed copy" styleClass="col-12"></p-message>
                     </div>
                     <span class="col-12 p-0 p-float-label mt-4">
-                        <input style="width: 100%;" type="text" id="resourceUrl" pInputText [(ngModel)]="exesices.resourceUrl"> 
+                        <input style="width: 100%;" type="text" id="resourceUrl" pInputText [(ngModel)]="exesices.resourceUrl" autocomplete="off"> 
                         <label for="resourceUrl">Resource Url</label>
                     </span>
                 </div>

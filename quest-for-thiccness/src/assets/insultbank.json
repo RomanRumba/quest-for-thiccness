@@ -1,0 +1,18 @@
+[
+    {
+        "insult":"How can you be so stupid there like 1 thing that you need to fill out???",
+        "type" :"invalform"
+    },
+    {
+        "insult":"Click on shit and then make a program you fat fuck, its so simple",
+        "type" :"exersizeinfo"
+    },
+    {
+        "insult":"Are you lifting air or weights? fill the fucking form",
+        "type" :"invalidval"
+    },
+    {
+        "insult":"OOOoooo you must feel so good about yourself right now dont you big boy",
+        "type" :"random"
+    }
+]

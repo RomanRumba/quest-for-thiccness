@@ -7,6 +7,7 @@ import { VirginComponent } from 'src/app/components/virgin/virgin.component';
 import { Excersize } from 'src/app/models/excersize';
 import { ExcersizeformConfig } from 'src/app/models/modals/ExcersizeformConfig';
 import { CommonService } from 'src/app/services/commonService';
+import { InsultService } from 'src/app/services/insultService';
 
 @Component({
   selector: 'app-home',
@@ -46,7 +47,8 @@ export class HomeComponent implements OnDestroy
   
   constructor(private commonService: CommonService,
               private messageService: MessageService,
-              private dialogService: DialogService) { }
+              private dialogService: DialogService,
+              public insultService: InsultService) { }
 
   ngOnInit() 
   {

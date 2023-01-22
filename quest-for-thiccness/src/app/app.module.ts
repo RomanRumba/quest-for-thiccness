@@ -32,7 +32,7 @@ import {MessageModule} from 'primeng/message';
 import {TabViewModule} from 'primeng/tabview';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {KnobModule} from 'primeng/knob';
-
+import {RadioButtonModule} from 'primeng/radiobutton';
 // my imports
 import { AppComponent } from './app.component';
 import { AppRoutingModule, RoutingComponents } from './app.routing.module';
@@ -41,6 +41,7 @@ import { ExcersizeformComponent } from './components/excersizeform/excersizeform
 import { CommonModule } from '@angular/common';
 import { ExcersizeComponent } from './components/excersize/excersize.component';
 import { VirginComponent } from './components/virgin/virgin.component';
+import { WhyareufragileComponent } from './components/whyareufragile/whyareufragile.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { VirginComponent } from './components/virgin/virgin.component';
     RoutingComponents,
     ExcersizeformComponent,
     ExcersizeComponent,
-    VirginComponent
+    VirginComponent,
+    WhyareufragileComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +87,8 @@ import { VirginComponent } from './components/virgin/virgin.component';
     MessageModule,
     TabViewModule,
     ProgressSpinnerModule,
-    KnobModule
+    KnobModule,
+    RadioButtonModule
   ],
   providers: [CommonService],
   bootstrap: [AppComponent]

@@ -8,7 +8,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class InsultService 
 {
-   private readonly INSULTDBURL = "http://192.168.50.130:4200/assets/insultbank.json";
+   private readonly INSULTDBURL = "http://192.168.50.130:4200/assets/insultbank.json";//"https://romanrumba.github.io/quest-for-thiccness/assets/insultbank.json";
    private readonly ISUSERPUSSY = "ISUSERPUSSY";
    private readonly insultTypes : string[] = 
    [

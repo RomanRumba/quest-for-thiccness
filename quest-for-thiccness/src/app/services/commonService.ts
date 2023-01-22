@@ -10,8 +10,8 @@ import { Program } from '../models/program';
 })
 export class CommonService 
 {
-    public readonly BASEULR = "http://192.168.50.130:4200/";
-    public readonly EXERSIZEDBURL = "http://192.168.50.130:4200/assets/excersizes.json";
+    public readonly BASEULR = "http://192.168.50.130:4200/";// "https://romanrumba.github.io/quest-for-thiccness/";
+    public readonly EXERSIZEDBURL = "http://192.168.50.130:4200/assets/excersizes.json"; //"https://romanrumba.github.io/quest-for-thiccness/assets/excersizes.json"
     
 
     private readonly FIRSTTIMEKEY = "MYFIRSTTIME";

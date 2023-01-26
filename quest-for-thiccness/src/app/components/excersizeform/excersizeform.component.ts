@@ -32,6 +32,11 @@ export class ExcersizeformComponent
   public weightOrSec:number | undefined;
   public rest:number| undefined ;
 
+  public currentImgsToRotate: string[]| undefined = [];
+  public currentImgIndex: number = 0;
+  public currentImgToRotate: string | undefined;
+  public rotateRef : any;
+
   constructor(private commonService: CommonService,
               private ref: DynamicDialogRef, 
               private config: DynamicDialogConfig,
@@ -44,7 +49,8 @@ export class ExcersizeformComponent
     this.flag = (<ExcersizeformConfig>this.config.data).flag;
     this.selectedExcersizes = (<ExcersizeformConfig>this.config.data).excersizes;
     this.submitted = false;
-
+    this.rotateResourceImg();
+    this.currentImgIndex = 0;
     if(this.flag === 1)
     {
       this.closingLabel = "Delete";
@@ -77,6 +83,7 @@ export class ExcersizeformComponent
       return;
     }
     this.commonService.saveNewProgram(this.program);
+    clearTimeout(this.rotateRef);
     this.ref.close(this.program);
   }
   
@@ -90,6 +97,7 @@ export class ExcersizeformComponent
       return;
     }
     this.commonService.updateProgram(this.program);
+    clearTimeout(this.rotateRef);
     this.ref.close(this.program);
   }
 
@@ -138,6 +146,23 @@ export class ExcersizeformComponent
     this.weightOrSec = undefined;
     this.repsOrMin=undefined;
     this.rest= undefined;
+    this.currentImgsToRotate = this.selectedExcersizes[event.index].resourseUrl;
+  }
+
+  rotateResourceImg()
+  {
+    clearTimeout(this.rotateRef);
+    if(typeof(this.currentImgsToRotate) !== "undefined" && this.currentImgsToRotate.length > 0)
+    {
+      this.currentImgToRotate = "https://raw.githubusercontent.com/wrkout/exercises.json/master/"+this.currentImgsToRotate[this.currentImgIndex];
+      this.currentImgIndex ++;
+
+      if(this.currentImgIndex > this.currentImgsToRotate.length -1)
+      {
+        this.currentImgIndex = 0;
+      }
+    }
+    this.rotateRef = setTimeout(() => { this.rotateResourceImg(); }, 1000);
   }
 
   // Confirmation which if true will delete a set within a exersize
@@ -191,7 +216,7 @@ export class ExcersizeformComponent
         target: event.target,
         message: this.flag === 1? 'Are you sure that you want to delete this program?' : 'Are you sure that you want to close without saving',
         icon: 'pi pi-exclamation-triangle',
-        accept: () => { this.ref.close(null); },
+        accept: () => { clearTimeout(this.rotateRef); this.ref.close(null); },
         reject: () => {}
     });
   }

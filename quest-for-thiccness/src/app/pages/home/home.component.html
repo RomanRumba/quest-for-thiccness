@@ -1,9 +1,9 @@
 <p-toast></p-toast>
 <div class="col-12 p-0 excersize-container">
     <p-table #dt [value]="excersizes" responsiveLayout="stack" [breakpoint]="'960px'" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '20rem'}"
-             selectionMode="multiple" [(selection)]="selectedExcersizes" dataKey="id" [globalFilterFields]="['name','target']">
+             selectionMode="multiple" [(selection)]="selectedExcersizes" dataKey="id" [globalFilterFields]="['name','target','secondaryTarget']">
         <ng-template pTemplate="caption">
-            <div class="grid">
+            <div class="grid customCaption ">
                 <div class="col-12 md:col-4 p-0">
                     <p class="pt-1 pl-3">Available Exercises</p>
                 </div>
@@ -18,6 +18,9 @@
                             <input class="p-inputtext-sm col-12 " pInputText type="text" [(ngModel)]="currentSearchString" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search by {{selectedSearchField.field}}" />
                         </span>
                    </div>
+                   <div class="col-12">
+                       <p-selectButton (onChange)="applyPushPullFilter()" styleClass="ml-2" [options]="pushPullSearh" [(ngModel)]="selectedPushPullSearch" optionLabel="field"></p-selectButton>
+                   </div>
                 </div>
                 <div class="col-12 pt-0 pb-0 pl-3 pr-3" *ngIf="selectedExcersizes.length === 0">
                     <p-message icon="pi pi-info-circle" severity="info" text="{{insultService.insultOn? insultService.getRandomInsultType(0):'Tap on exercises and use the bottom right action button to create new programs'}}" styleClass="mr-2 col-12"></p-message>
@@ -27,13 +30,25 @@
         <ng-template pTemplate="header" let-columns>
             <tr >
                 <th>Name</th>
-                <th>Targets</th>
+                <th>Push/Pull</th>
+                <th>Primary Targets</th>
+                <th>Secondary Targets</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-excersize let-columns="columns" let-rowIndex="rowIndex">
             <tr [pSelectableRow]="excersize" [pSelectableRowIndex]="rowIndex">
-                <td><span class="p-column-title"><strong>Name</strong></span>{{excersize.name}}</td>
-                <td><span class="p-column-title"><strong>Targets</strong></span> <span><p-tag *ngFor="let muscle of excersize.target" value="{{muscle}}" severity="info" styleClass="mr-1"></p-tag></span></td>
+                <td><span class="p-column-title pr-3 text-right"><strong>Name</strong></span>
+                    <span>{{excersize.name}}</span>
+                </td>
+                <td><span class="p-column-title pr-3"><strong>Push/Pull</strong></span>
+                    <span>{{excersize.pushPull}}</span>
+                </td>
+                <td><span class="p-column-title pr-3"><strong>Primary Targets</strong></span> 
+                    <span class="text-right"><p-tag *ngFor="let muscle of excersize.target" value="{{muscle}}" severity="info" styleClass="mr-1 mt-1"></p-tag></span>
+                </td>
+                <td><span class="p-column-title pr-3"><strong>Secondary Targets</strong></span> 
+                    <span class="text-right"><p-tag *ngFor="let muscle of excersize.secondaryTarget" value="{{muscle}}" severity="info" styleClass="mr-1 mb-1"></p-tag></span>
+                </td>
             </tr>
         </ng-template>
     </p-table>

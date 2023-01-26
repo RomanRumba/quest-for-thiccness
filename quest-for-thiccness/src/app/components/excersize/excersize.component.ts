@@ -35,7 +35,7 @@ export class ExcersizeComponent
   public isRestTimer :boolean = false;
   public currentMaxRestTime: number = 0;
   public restTimeCounter: number = 0;
-  public counterRed: any;
+  public counterRef: any;
 
   public showUpdateForm:boolean = false;
   public exersizeSetIDToUpdate: string = "";
@@ -43,6 +43,11 @@ export class ExcersizeComponent
   public repsOrMin:number | undefined;
   public weightOrSec:number | undefined;
   public rest:number| undefined ;
+
+  public currentImgsToRotate: string[]| undefined = [];
+  public currentImgIndex: number = 0;
+  public currentImgToRotate: string | undefined;
+  public rotateRef : any;
 
   // There is an issue with IFRAMES inside tabs, basically when a change occurs in the 
   // component the sanitizer.bypassSecurityTrustResourceUrl function needs to re-run which is techinically fine
@@ -81,12 +86,17 @@ export class ExcersizeComponent
     this.currentExersizeID = "";
     this.currentExersizeSetID =""; 
     this.loading = false;
+
+    this.currentImgsToRotate = this.selectedExcersizes[0].resourseUrl;
+    this.rotateResourceImg();
+    this.currentImgIndex = 0;
   }
 
   // Need to implement this to remove the timeout counter
   ngOnDestroy() 
   {
-    clearTimeout(this.counterRed);
+    clearTimeout(this.counterRef);
+    clearTimeout(this.rotateRef); 
   }
 
   // Fetches the name of the exersize.
@@ -148,7 +158,7 @@ export class ExcersizeComponent
     this.currentMaxRestTime = <number>timeInSet?.repsOrMin*60 + <number>timeInSet?.weightOrSec;
     this.restTimeCounter = <number>timeInSet?.repsOrMin*60 + <number>timeInSet?.weightOrSec;
 
-    clearTimeout(this.counterRed);
+    clearTimeout(this.counterRef);
     this.startRestCountDown(exersizeId, setId);
   }
 
@@ -162,13 +172,13 @@ export class ExcersizeComponent
     // There is a bug in primeng or angular which throws exceptions if you disable the component after clicking on it
     // detect changes is a temporary work around.
     this.cdRef.detectChanges();
-    clearTimeout(this.counterRed);
+    clearTimeout(this.counterRef);
     this.startRestCountDown(exersizeId, null);
   }
 
   startRestCountDown(exersizeId: string, isSetBased: string | null)
   {
-    clearTimeout(this.counterRed);
+    clearTimeout(this.counterRef);
     if(this.restTimeCounter <= 0)
     {
       this.showTimer = false;
@@ -184,7 +194,7 @@ export class ExcersizeComponent
       return;
     }
     this.restTimeCounter -= 1;
-    this.counterRed = setTimeout(() => { this.startRestCountDown(exersizeId,isSetBased); }, 1000);
+    this.counterRef = setTimeout(() => { this.startRestCountDown(exersizeId,isSetBased); }, 1000);
   }
 
   checkIfExersizeIsFinished(exersizeId: string)
@@ -272,4 +282,26 @@ export class ExcersizeComponent
       this.messageService.add({severity:'error', summary: 'Something broke??', detail: "System encountered an error please regresh the page, if this percists delete the program"});
     }
   }
+
+  setNewExersizeAnimation(event: any)
+  {
+    this.currentImgsToRotate = this.selectedExcersizes[event.index].resourseUrl;
+  }
+
+  rotateResourceImg()
+  {
+    clearTimeout(this.rotateRef);
+    if(typeof(this.currentImgsToRotate) !== "undefined" && this.currentImgsToRotate.length > 0)
+    {
+      this.currentImgToRotate = this.commonService.RESOURCEURL+this.currentImgsToRotate[this.currentImgIndex];
+      this.currentImgIndex ++;
+
+      if(this.currentImgIndex > this.currentImgsToRotate.length -1)
+      {
+        this.currentImgIndex = 0;
+      }
+    }
+    this.rotateRef = setTimeout(() => { this.rotateResourceImg(); }, 1000);
+  }
+
 }

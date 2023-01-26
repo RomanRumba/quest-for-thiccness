@@ -6,6 +6,15 @@ import { DOCUMENT } from '@angular/common';
 })
 export class ThemeService 
 {
+   /* How to Add new Themes:
+    * 1. navigate to angular.json file 
+    * 2. in sed file find the styles section
+    * 3. There you will see saga-blue and arya-purple object
+    *    copy-paste another object and fill out the information for ur .css
+    * 4. re-build the entire project
+    * 5. add a new entry here in the 'themeNames'
+    * 6. you are done!
+   */
    private readonly SELECTEDTHEME = "SELECTEDTHEME";
    public themeNames : { friendlyName: string, themeName: string} [] = 
    [
@@ -23,7 +32,7 @@ export class ThemeService
    getMyCurrentTheme()
    {
         let usersSavedTheme = localStorage.getItem(this.SELECTEDTHEME);   
-        let themeIndex = this.themeNames.findIndex(t => t.themeName === usersSavedTheme)     
+        let themeIndex = this.themeNames.findIndex(t => t.themeName === usersSavedTheme);    
         if(themeIndex >= 0)        
         {           
             return this.themeNames[themeIndex];       
@@ -36,6 +45,7 @@ export class ThemeService
 
    switchTheme(theme: string)
    { 
+     // in index.html there is an LINK element that we change to target different style sheets
      let themeLink = this.document.getElementById('app-theme') as HTMLLinkElement;       
      if (themeLink)         
      {            
@@ -45,11 +55,11 @@ export class ThemeService
    }    
     
    loadSavedTheme()    
-    {        
+   {        
         let usersSavedTheme = localStorage.getItem(this.SELECTEDTHEME);        
         if(this.themeNames.findIndex(t => t.themeName === usersSavedTheme) >= 0)        
         {           
             this.switchTheme(<string>usersSavedTheme);        
         }   
-}
+   }
 }

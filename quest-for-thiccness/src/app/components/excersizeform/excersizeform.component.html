@@ -106,13 +106,16 @@
                             <label for="{{exesices.exesiceID}}_notes">Notes</label>
                         </span>
                     </div>
-                    <div class="col-12 p-0">
-                        <p-message severity="info" icon="pi pi-info-circle" text="Copy-paste an URL to a GIF, Image, or a youtube video. NOTE: use Embed copy" styleClass="col-12"></p-message>
+                    <div class="col-12 p-0 mt-2">
+                        <p-message severity="info" icon="pi pi-info-circle" text="If you don't like the images below, you can Copy-paste an URL to a GIF, Image, or a youtube video (NOTE: use Embed copy!) and that content will appear instead in your program" styleClass="col-12"></p-message>
                     </div>
-                    <span class="col-12 p-0 p-float-label mt-4">
+                    <span class="col-12 p-0 p-float-label mt-1">
                         <input style="width: 100%;" type="text" id="resourceUrl" pInputText [(ngModel)]="exesices.resourceUrl" autocomplete="off"> 
                         <label for="resourceUrl">Resource Url</label>
                     </span>
+                    <div class="col-12 p-0 mt-2" *ngIf="currentImgToRotate">
+                        <img width="100%" height="200px" style="object-fit: cover" src="{{currentImgToRotate}}">
+                    </div>
                 </div>
 
             </p-accordionTab>

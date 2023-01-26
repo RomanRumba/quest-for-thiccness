@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { CommonService } from './services/commonService';
 import { InsultService } from './services/insultService';
@@ -10,7 +10,8 @@ import { ThemeService } from './services/themeService';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent 
+{
   public title = 'Quest for Thiccness';
   public items: MenuItem[] = [];
   
@@ -19,6 +20,7 @@ export class AppComponent {
               private commonService: CommonService,
               private route: Router)
   {
+    // Best to do this in the constructor, so there will be less checks to for re-rendering
     this.themeService.loadSavedTheme();
   }
 
@@ -46,6 +48,7 @@ export class AppComponent {
         }
       ];
 
+      // If user changed their default page redirect them to sed page
       let defaultPageCheck = this.commonService.getDefaultPage();
       if(defaultPageCheck !== "exercises")
       {

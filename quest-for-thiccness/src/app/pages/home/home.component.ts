@@ -33,18 +33,45 @@ export class HomeComponent implements OnDestroy
   public selectedExcersizes: Excersize[] = [];
 
   // Search functionality
-  public selectedSearchField: any = { field: "name" };
+  public selectedSearchField: any = { field: "name" , target: "name"};
   public currentSearchString: string = "";
   public searchAbleExersizeFields: any[] = 
   [
     {
-      field: "name"
+      field: "name",
+      target: "name" 
     },
     {
-      field: "target"
+      field: "primary targets",
+      target: "target" 
+    },
+    {
+      field: "secondary targets",
+      target: "secondaryTarget" 
     }
   ];
-  
+ 
+  public selectedPushPullSearch: any = { field: "All" , value: ""};
+  public pushPullSearh: any[] = 
+  [
+    {
+      field: "All",
+      value: "" 
+    },
+    {
+      field: "Push",
+      value: "push" 
+    },
+    {
+      field: "Pull",
+      value: "pull" 
+    },
+    {
+      field: "Neither",
+      value: "neither" 
+    },
+  ];
+
   constructor(private commonService: CommonService,
               private messageService: MessageService,
               private dialogService: DialogService,
@@ -113,12 +140,29 @@ export class HomeComponent implements OnDestroy
   {
     this.currentSearchString = "";
     this.dt?.clear();
+    this.applyPushPullFilter();
   }
 
   // calls the filter function of the table component with specific search parameters
   applyFilterGlobal($event :Event, searchCommand : string) 
   {
-    this.dt?.filter(($event.target as HTMLInputElement).value, this.selectedSearchField.field, searchCommand);
+    if(this.selectedSearchField.target === "target" || this.selectedSearchField.target === "secondaryTarget")
+    {
+      let valuSplitted = ($event.target as HTMLInputElement).value.trim().split(" ");
+      valuSplitted.forEach(searchCom => 
+      {
+        this.dt?.filter(searchCom, this.selectedSearchField.target, searchCommand);
+      });
+    }
+    else
+    {
+      this.dt?.filter(($event.target as HTMLInputElement).value, this.selectedSearchField.target, searchCommand);
+    }
+  }
+
+  applyPushPullFilter()
+  {
+    this.dt?.filter(this.selectedPushPullSearch.value, "pushPull", "contains");
   }
 
   // checks if the user has selected any exersizes and if they did

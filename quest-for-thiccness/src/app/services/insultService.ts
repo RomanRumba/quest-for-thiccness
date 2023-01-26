@@ -8,8 +8,10 @@ import { lastValueFrom } from 'rxjs';
 })
 export class InsultService 
 {
-   private readonly INSULTDBURL = "http://192.168.50.130:4200/assets/insultbank.json";//"https://romanrumba.github.io/quest-for-thiccness/assets/insultbank.json";
+   // Change this to find other insult banks
+   private readonly INSULTDBURL = "https://romanrumba.github.io/quest-for-thiccness/assets/insultbank.json"; //"http://192.168.50.130:4200/assets/insultbank.json";
    private readonly ISUSERPUSSY = "ISUSERPUSSY";
+   // you could make a key,val pair also but then you need 
    private readonly insultTypes : string[] = 
    [
     "exersizeinfo",     // 0
@@ -23,7 +25,6 @@ export class InsultService
    private insultBank: Insult[] = [];
    public insultOn : boolean = false;
    
-
    constructor(private http: HttpClient) {}   
    
    isUserAPussy()

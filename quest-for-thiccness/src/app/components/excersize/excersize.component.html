@@ -1,13 +1,18 @@
 <p-confirmPopup></p-confirmPopup>
 <p-toast></p-toast>
 <div class="col-12 p-0" style="overflow-y: scroll; overflow-x: hidden;" *ngIf="!loading">
-    <p-tabView styleClass="p-0" [(activeIndex)]="activeExersize" [scrollable]="true">
+    <p-tabView styleClass="p-0" [(activeIndex)]="activeExersize" [scrollable]="true" (onChange)="setNewExersizeAnimation($event)">
         <p-tabPanel *ngFor="let exesice of program.exesices;" [header]="getExersizeName(exesice.exesiceID)" >
             <div class="grid col-12 p-0" *ngIf="getExersizeName(exesice.exesiceID) as currentExersizeName">
-                <div class="col-12 p-0" *ngIf="exesice.resourceUrl !== ''">
+                <div class="col-12 p-0" *ngIf="exesice.resourceUrl !== ''; else defaultRescource">
                     <img *ngIf="exesice.resourceUrl.includes('www.youtube') !== true && exesice.resourceUrl.includes('youtu.be') !== true" width="100%" height="215px" [src]="exesice.resourceUrl">
                     <iframe *ngIf="exesice.resourceUrl.includes('www.youtube') === true || exesice.resourceUrl.includes('youtu.be') === true" width="100%" height="215px" [src]="exersizeYoutubeUrls[exesice.exesiceID]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
+                <ng-template #defaultRescource>
+                    <div class="col-12 p-0" *ngIf="currentImgToRotate">
+                        <img width="100%" height="215px" style="object-fit: cover" src="{{currentImgToRotate}}">
+                    </div>
+                </ng-template>
                 <div class="col-12 p-0 flex justify-content-center">
                     <h2>{{currentExersizeName}}</h2>
                 </div>

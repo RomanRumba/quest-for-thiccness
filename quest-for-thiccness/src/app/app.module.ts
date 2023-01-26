@@ -33,6 +33,8 @@ import {TabViewModule} from 'primeng/tabview';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {KnobModule} from 'primeng/knob';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {SelectButtonModule} from 'primeng/selectbutton';
+
 // my imports
 import { AppComponent } from './app.component';
 import { AppRoutingModule, RoutingComponents } from './app.routing.module';
@@ -88,7 +90,8 @@ import { WhyareufragileComponent } from './components/whyareufragile/whyareufrag
     TabViewModule,
     ProgressSpinnerModule,
     KnobModule,
-    RadioButtonModule
+    RadioButtonModule,
+    SelectButtonModule
   ],
   providers: [CommonService],
   bootstrap: [AppComponent]

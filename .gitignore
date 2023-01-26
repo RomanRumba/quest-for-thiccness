@@ -5,6 +5,7 @@
 !/assets
 !/assets/*
 !/assets/tutorial/*
+!/assets/exercises/*
 !3rdpartylicenses.txt
 !color.*.png
 !hue.*.png

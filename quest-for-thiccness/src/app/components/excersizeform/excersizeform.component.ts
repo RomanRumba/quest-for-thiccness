@@ -154,7 +154,7 @@ export class ExcersizeformComponent
     clearTimeout(this.rotateRef);
     if(typeof(this.currentImgsToRotate) !== "undefined" && this.currentImgsToRotate.length > 0)
     {
-      this.currentImgToRotate = "https://raw.githubusercontent.com/wrkout/exercises.json/master/"+this.currentImgsToRotate[this.currentImgIndex];
+      this.currentImgToRotate = this.commonService.RESOURCEURL+this.currentImgsToRotate[this.currentImgIndex];
       this.currentImgIndex ++;
 
       if(this.currentImgIndex > this.currentImgsToRotate.length -1)

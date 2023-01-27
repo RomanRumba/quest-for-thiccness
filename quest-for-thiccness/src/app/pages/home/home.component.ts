@@ -250,7 +250,8 @@ export class HomeComponent implements OnDestroy
     this.updateRef.onClose.subscribe((options : {updatedID: string, ShouldOpenUpdateForm: boolean}) =>
     {
       this.selectedExcersizes = [];
-      if(options !== null)
+
+      if(typeof(options) !== "undefined")
       {
         this.messageService.add({severity:'success', summary: 'Updated', detail: "Program updated succesfully"});
       }

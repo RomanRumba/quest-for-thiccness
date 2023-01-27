@@ -186,7 +186,7 @@ export class CommonService
     // dynamic modals will call this function to decide on their with
     getWithForModal()
     {
-        let widthOfComponent = "100%";
+        let widthOfComponent = "96%";
         if(window.screen.width * window.devicePixelRatio > 960)
         {
           widthOfComponent = "450px";

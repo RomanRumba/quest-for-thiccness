@@ -13,6 +13,32 @@
     ]
   },
   {
+    "id": "a7ac0371-461d-4962-9aa9-e2cc120c4c27",
+    "name": "Lateral Raises",
+    "target": [
+      "shoulders"
+    ],
+    "secondaryTarget": [],
+    "pushPull": "push",
+    "resourseUrl": [
+      "exercises/Lateral_raises/0.jpg",
+      "exercises/Lateral_raises/1.jpg"
+    ]
+  },
+  {
+    "id": "a7ac0371-461d-4962-9aa9-fffg120c3c37",
+    "name": "Barbbell Dips",
+    "target": [
+      "triceps"
+    ],
+    "secondaryTarget": [],
+    "pushPull": "push",
+    "resourseUrl": [
+      "exercises/Barbbell_dips/0.jpg",
+      "exercises/Barbbell_dips/1.jpg"
+    ]
+  },
+  {
     "id": "a7ad9371-461d-4962-8bb9-e2cc120c4c27",
     "name": "Ab Crunch Machine",
     "target": [

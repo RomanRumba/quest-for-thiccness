@@ -44,6 +44,7 @@ import { CommonModule } from '@angular/common';
 import { ExcersizeComponent } from './components/excersize/excersize.component';
 import { VirginComponent } from './components/virgin/virgin.component';
 import { WhyareufragileComponent } from './components/whyareufragile/whyareufragile.component';
+import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { WhyareufragileComponent } from './components/whyareufragile/whyareufrag
     ExcersizeformComponent,
     ExcersizeComponent,
     VirginComponent,
-    WhyareufragileComponent
+    WhyareufragileComponent,
+    ExerciseListComponent
   ],
   imports: [
     BrowserModule,

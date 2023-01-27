@@ -183,6 +183,18 @@ export class CommonService
         return programToParse;
     }
 
+    // dynamic modals will call this function to decide on their with
+    getWithForModal()
+    {
+        let widthOfComponent = "100%";
+        if(window.screen.width * window.devicePixelRatio > 960)
+        {
+          widthOfComponent = "450px";
+        }
+
+        return widthOfComponent;
+    }
+
     // ----------- First Time settings -------------
     isThisMyFirstTime() : boolean
     {

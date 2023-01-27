@@ -3,12 +3,12 @@
     <p-table #dt [value]="excersizes" responsiveLayout="stack" [breakpoint]="'960px'" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '20rem'}"
              selectionMode="multiple" [(selection)]="selectedExcersizes" dataKey="id" [globalFilterFields]="['name','target','secondaryTarget']">
         <ng-template pTemplate="caption">
-            <div class="grid customCaption ">
-                <div class="col-12 md:col-4 p-0">
+            <div class="grid customCaption">
+                <div class="col-12 md:col-3 lg:col-3 p-0">
                     <p class="pt-1 pl-3">Available Exercises</p>
                 </div>
-                <div class="grid col-12 pb-0">
-                   <div class="col-4 ml-2">
+                <div class="grid col-12 pb-0 md:col-9 lg:col-4 lg:col-offset-5">
+                   <div class="col-4 ml-2 md:ml-0">
                        <p-dropdown styleClass="p-inputtext-sm col-12 p-0" (onChange)="clearSearch()" [options]="searchAbleExersizeFields" [(ngModel)]="selectedSearchField" optionLabel="field"></p-dropdown>
                     </div>
                     <div class="col-7">
@@ -19,7 +19,7 @@
                         </span>
                    </div>
                    <div class="col-12">
-                       <p-selectButton (onChange)="applyPushPullFilter()" styleClass="ml-2" [options]="pushPullSearh" [(ngModel)]="selectedPushPullSearch" optionLabel="field"></p-selectButton>
+                       <p-selectButton (onChange)="applyPushPullFilter()" styleClass="ml-2 md:ml-0" [options]="pushPullSearh" [(ngModel)]="selectedPushPullSearch" optionLabel="field"></p-selectButton>
                    </div>
                 </div>
                 <div class="col-12 pt-0 pb-0 pl-3 pr-3" *ngIf="selectedExcersizes.length === 0">

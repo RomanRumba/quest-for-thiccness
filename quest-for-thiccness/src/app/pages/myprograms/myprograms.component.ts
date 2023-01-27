@@ -67,7 +67,7 @@ export class MyprogramsComponent
         header: 'Update Program',
         // we dont want to let the user close this manully but rather add a confirm dialog.
         closable: false, 
-        width: '90%',
+        width: this.commonService.getWithForModal(),
         contentStyle: {"overflow": "auto"},
         baseZIndex: 10000,
         maximizable: true,
@@ -101,7 +101,7 @@ export class MyprogramsComponent
       header: programToStart?.name,
       // we dont want to let the user close this manully but rather add a confirm dialog.
       closable: true, 
-      width: '100%',
+      width: this.commonService.getWithForModal(),
       height: '100vh',
       contentStyle: {"overflow": "auto", 'padding':'0em'},
       baseZIndex: 10000,

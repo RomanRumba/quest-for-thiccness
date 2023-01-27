@@ -3,6 +3,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { ExcersizeformComponent } from 'src/app/components/excersizeform/excersizeform.component';
+import { ExerciseListComponent } from 'src/app/components/exercise-list/exercise-list.component';
 import { VirginComponent } from 'src/app/components/virgin/virgin.component';
 import { Excersize } from 'src/app/models/excersize';
 import { ExcersizeformConfig } from 'src/app/models/modals/ExcersizeformConfig';
@@ -20,6 +21,7 @@ export class HomeComponent implements OnDestroy
   // Reference to the popup component 
   private ref: DynamicDialogRef | undefined;
   private virginref : DynamicDialogRef | undefined;
+  private updateRef : DynamicDialogRef | undefined;
   // Reference to the table in PrimeNG 
   @ViewChild('dt') dt: Table | undefined;
   
@@ -83,14 +85,19 @@ export class HomeComponent implements OnDestroy
     this.actions =
     [
       {  
+        icon: 'pi pi-trash',
+        tooltip: 'Clear', tooltipPosition: 'left',
+        command: () => { this.selectedExcersizes = []; } 
+      },
+      {  
         icon: 'pi pi-plus',
         tooltip: 'Add', tooltipPosition: 'left',
         command: () => { this.openNewExesize(); } 
       },
-      {  
-        icon: 'pi pi-trash',
+      {
+        icon: 'pi pi-pencil',
         tooltip: 'Clear', tooltipPosition: 'left',
-        command: () => { this.selectedExcersizes = []; } 
+        command: () => { this.addExercisesToExistingProgram(); } 
       }
    ];
 
@@ -102,7 +109,7 @@ export class HomeComponent implements OnDestroy
         // we dont want to let the user close this manully but rather add a confirm dialog.
         closable: true, 
         // This makes it look like 100% but its not because this 100% of the parrent
-        width: '100%',
+        width: this.commonService.getWithForModal(),
         height: '100vh',
         contentStyle: {"overflow": "auto"},
         baseZIndex: 10000,
@@ -132,6 +139,10 @@ export class HomeComponent implements OnDestroy
     if(this.virginref)
     {
       this.virginref.close();
+    }
+    if(this.updateRef)
+    {
+      this.updateRef.close();
     }
   }
 
@@ -175,14 +186,15 @@ export class HomeComponent implements OnDestroy
       this.messageService.add({severity:'error', summary: 'no exercises selected', detail: this.insultService.insultOn? this.insultService.getRandomInsultType(1) :"please select exercises from the 'available exercises' to create a new program."});
       return;
     }
-
+    
+   
     this.ref = this.dialogService.open(ExcersizeformComponent, 
     {
       header: 'New program',
       // we dont want to let the user close this manully but rather add a confirm dialog.
       closable: false, 
       // This makes it look like 100% but its not because this 100% of the parrent
-      width: '100%',
+      width: this.commonService.getWithForModal(),
       height: '100vh',
       contentStyle: {"overflow": "auto"},
       baseZIndex: 10000,
@@ -203,6 +215,44 @@ export class HomeComponent implements OnDestroy
       if(newExercise !== null)
       {
         this.messageService.add({severity:'success', summary: 'Created', detail: "New program created! visit 'My Programs' to see your programs"});
+      }
+    });
+  }
+
+  addExercisesToExistingProgram()
+  {
+    if(this.selectedExcersizes.length <= 0)
+    {
+      this.messageService.add({severity:'error', summary: 'no exercises selected', detail: this.insultService.insultOn? this.insultService.getRandomInsultType(1) :"please select exercises from the 'available exercises'"});
+      return;
+    }
+    
+    this.updateRef = this.dialogService.open(ExerciseListComponent, 
+    {
+      header: 'Update a program',
+      closable: true, 
+      // This makes it look like 100% but its not because this 100% of the parrent
+      width: this.commonService.getWithForModal(),
+      height: '100vh',
+      contentStyle: {"overflow": "auto"},
+      baseZIndex: 10000,
+      maximizable: true,
+      data: 
+      <ExcersizeformConfig><unknown>{
+        flag: 1,
+        excersizes: this.selectedExcersizes,
+        program: null
+      }
+    });
+
+    // when the modal closes, if this component recives new Exercise
+    // then it means the user created a new program
+    this.updateRef.onClose.subscribe((options : {updatedID: string, ShouldOpenUpdateForm: boolean}) =>
+    {
+      this.selectedExcersizes = [];
+      if(options !== null)
+      {
+        this.messageService.add({severity:'success', summary: 'Updated', detail: "Program updated succesfully"});
       }
     });
   }

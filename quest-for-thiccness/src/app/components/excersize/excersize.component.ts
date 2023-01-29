@@ -169,6 +169,15 @@ export class ExcersizeComponent
     this.isRestTimer = true;
     this.currentMaxRestTime = <number>restTimeInSet?.pause;
     this.restTimeCounter = <number>restTimeInSet?.pause;
+
+    // Show the form to update the finished set
+    this.repsOrMin = <number>restTimeInSet?.repsOrMin;
+    this.weightOrSec = <number>restTimeInSet?.weightOrSec;
+    this.rest = <number>restTimeInSet?.pause;
+    this.exersizeSetIDToUpdate = setId;
+    this.exersizeIDToUpdate = exersizeId;
+    this.showUpdateForm = true;
+
     // There is a bug in primeng or angular which throws exceptions if you disable the component after clicking on it
     // detect changes is a temporary work around.
     this.cdRef.detectChanges();
@@ -211,17 +220,7 @@ export class ExcersizeComponent
 
     if(isFinished)
     {
-      this.exersizeFinished[exersizeId] = true;
-      let currentSet = this.program.exesices.find(e => e.exesiceID === exersizeId)?.sets.find(r => r.setId == this.currentExersizeSetID);
-      
-      // Before finish we add this
-      this.repsOrMin = <number>currentSet?.repsOrMin;
-      this.weightOrSec = <number>currentSet?.weightOrSec;
-      this.rest = <number>currentSet?.pause;
-      this.exersizeSetIDToUpdate = <string>currentSet?.setId;
-      this.exersizeIDToUpdate = exersizeId;
-      this.showUpdateForm = true;
-      
+      this.exersizeFinished[exersizeId] = true;   
       this.currentExersizeID = "";
       this.currentExersizeSetID =""; 
     }
@@ -252,15 +251,15 @@ export class ExcersizeComponent
     if(exersizeToUpdate !== -1)
     {
       let setInexersizeToUpdate = this.program.exesices[exersizeToUpdate].sets.findIndex(s => s.setId === this.exersizeSetIDToUpdate);
-      if(setInexersizeToUpdate !== 1)
+      if(setInexersizeToUpdate !== -1)
       {
         // we dont want to update this.program because it will mess with the UI.
         // I have no fucking clue why but object.assign still keeps the references somehow...
         // this is another way of copying objects.
         let oldProgram =JSON.parse(JSON.stringify(this.program));
-        this.program.exesices[exersizeToUpdate].sets[exersizeToUpdate].repsOrMin = <number>this.repsOrMin;
-        this.program.exesices[exersizeToUpdate].sets[exersizeToUpdate].weightOrSec = <number>this.weightOrSec;
-        this.program.exesices[exersizeToUpdate].sets[exersizeToUpdate].pause = <number>this.rest;
+        this.program.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].repsOrMin = <number>this.repsOrMin;
+        this.program.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].weightOrSec = <number>this.weightOrSec;
+        this.program.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].pause = <number>this.rest;
         this.commonService.updateProgram(this.program);
         this.program = oldProgram;
         this.clearUpdateSet();

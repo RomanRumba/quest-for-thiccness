@@ -35,22 +35,26 @@
                 <div class="col-12 p-0 mt-3"  *ngIf="exesice.isSetBased === true; else isNotSetBased">
                     <strong class="pb-2">Sets:</strong>
                     <div class="mb-2" *ngFor="let setToPerform of exesice.sets;">
-                        <span>
-                            <strong>Reps:</strong> {{setToPerform.repsOrMin}}
-                            <strong>Weight:</strong> {{setToPerform.weightOrSec}}Kg
-                            <strong>Rest:</strong> {{setToPerform.pause}}Sec
+                        <div class="flex justify-content-between">
+                            <span>
+                                <strong>Reps:</strong> {{setToPerform.repsOrMin}}
+                                <strong>Weight:</strong> {{setToPerform.weightOrSec}}Kg
+                                <strong>Rest:</strong> {{setToPerform.pause}}Sec
+                            </span>
                             <p-checkbox *ngIf="currentExersizeID === exesice.exesiceID || setsTracker[setToPerform.setId] === true" styleClass="ml-2" name="{{setToPerform.setId}}" [binary]="true" [(ngModel)]="setsTracker[setToPerform.setId]" [disabled]="setsTracker[setToPerform.setId] || showTimer" (onChange)="setFinished(exesice.exesiceID,setToPerform.setId)" ></p-checkbox>
-                        </span>
+                        </div>
                     </div>
                 </div>
                 <ng-template #isNotSetBased>
                     <div class="col-12 p-0 mt-3">
                         <strong class="pb-2">Sets:</strong>
                         <div class="mb-2" *ngFor="let setToPerform of exesice.sets;">
-                            <span>
-                                <strong>Min:</strong> {{setToPerform.repsOrMin}}
-                                <strong>Sec:</strong> {{setToPerform.weightOrSec}}
-                                <strong>Rest:</strong> {{setToPerform.pause}}Sec
+                            <span class="flex justify-content-between">
+                                <div> 
+                                    <strong>Min:</strong> {{setToPerform.repsOrMin}}
+                                    <strong>Sec:</strong> {{setToPerform.weightOrSec}}
+                                    <strong>Rest:</strong> {{setToPerform.pause}}Sec
+                                </div>
                                 <button [disabled]="setsTracker[setToPerform.setId] || showTimer" *ngIf="currentExersizeID === exesice.exesiceID && setsTracker[setToPerform.setId] === false" pButton pRipple label="Start" class="customTimeBasedButton p-button-success" (click)="startTimeBasedSet(exesice.exesiceID,setToPerform.setId)" ></button>
                                 <p-checkbox *ngIf="setsTracker[setToPerform.setId]" styleClass="ml-2" name="{{setToPerform.setId}}" [binary]="true" [(ngModel)]="setsTracker[setToPerform.setId]" [disabled]="setsTracker[setToPerform.setId] || showTimer" (onChange)="setFinished(exesice.exesiceID,setToPerform.setId)" ></p-checkbox>
                             </span>

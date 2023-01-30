@@ -26,6 +26,15 @@ export class ExcersizeComponent
     exesices: []
   };
 
+  // this object is used to update the sets for the future exersizezes
+  // so that the user does not see their changes at the same time
+  public programForUpdating : Program = {
+    id: "",
+    name: "",
+    schedule: [],
+    exesices: []
+  };
+
   public activeExersize: number = 0;
   public currentExersizeID: string = "";
   public currentExersizeSetID: string =""; 
@@ -83,6 +92,11 @@ export class ExcersizeComponent
         this.setsTracker[settoAdd.setId] = false;
       });
     });
+
+    // I have no fucking clue why but object.assign still keeps the references somehow...
+    // this is another way of copying objects.
+    this.programForUpdating =JSON.parse(JSON.stringify(this.program));
+
     this.currentExersizeID = "";
     this.currentExersizeSetID =""; 
     this.loading = false;
@@ -253,15 +267,10 @@ export class ExcersizeComponent
       let setInexersizeToUpdate = this.program.exesices[exersizeToUpdate].sets.findIndex(s => s.setId === this.exersizeSetIDToUpdate);
       if(setInexersizeToUpdate !== -1)
       {
-        // we dont want to update this.program because it will mess with the UI.
-        // I have no fucking clue why but object.assign still keeps the references somehow...
-        // this is another way of copying objects.
-        let oldProgram =JSON.parse(JSON.stringify(this.program));
-        this.program.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].repsOrMin = <number>this.repsOrMin;
-        this.program.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].weightOrSec = <number>this.weightOrSec;
-        this.program.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].pause = <number>this.rest;
-        this.commonService.updateProgram(this.program);
-        this.program = oldProgram;
+        this.programForUpdating.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].repsOrMin = <number>this.repsOrMin;
+        this.programForUpdating.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].weightOrSec = <number>this.weightOrSec;
+        this.programForUpdating.exesices[exersizeToUpdate].sets[setInexersizeToUpdate].pause = <number>this.rest;
+        this.commonService.updateProgram(this.programForUpdating);
         this.clearUpdateSet();
         if(this.insultService.insultOn && Math.floor(Math.random() * 10) > 4)
         {

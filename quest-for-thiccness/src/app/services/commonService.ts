@@ -10,10 +10,13 @@ import { Program } from '../models/program';
 })
 export class CommonService 
 {
+    private readonly CURRENTVERSION = 1.3; 
+
     public readonly BASEULR = "http://192.168.50.130:4200/";// "https://romanrumba.github.io/quest-for-thiccness/";
     public readonly EXERSIZEDBURL = "http://192.168.50.130:4200/assets/exercises.json"; //"https://romanrumba.github.io/quest-for-thiccness/assets/exercises.json"
     public readonly RESOURCEURL = "http://192.168.50.130:4200/assets/"; //"https://raw.githubusercontent.com/RomanRumba/quest-for-thiccness/prod/assets/";
 
+    private readonly LASTVERSIONKEY = "MYVERSION";
     private readonly FIRSTTIMEKEY = "MYFIRSTTIME";
     private readonly PROGRAMSKEY = "MYPROGRAMS";
     private readonly DEFAULTPAGEKEY = "DEFAULTPAGE";
@@ -48,7 +51,7 @@ export class CommonService
         }
         else
         {
-            this.myPrograms = JSON.parse(programsString);
+            this.myPrograms = this.ensureExersizesAreInCorrectFormat(JSON.parse(programsString));
         }
         return <Program[]>this.myPrograms;
     }
@@ -116,42 +119,13 @@ export class CommonService
         return <Program[]>this.myPrograms;
     }
 
-    //--------------- Default Page stuff ---------------
-    getDefaultPage(): string
-    {
-        let defaultPage = localStorage.getItem(this.DEFAULTPAGEKEY);
-        if(defaultPage === null)
-        {
-            return "exercises";
-        }
-        return defaultPage;
-    }
-
-    updateDefaultPage(newDefaultPage:string)
-    {
-        localStorage.setItem(this.DEFAULTPAGEKEY,newDefaultPage);
-    }
-
     //--------------- Helper functions-----------------
-    // something i got on stakc https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
-    generateUUID() { 
-        var d = new Date().getTime();//Timestamp
-        var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16;//random number between 0 and 16
-            if(d > 0){//Use timestamp until depleted
-                r = (d + r)%16 | 0;
-                d = Math.floor(d/16);
-            } else {//Use microseconds since page-load if supported
-                r = (d2 + r)%16 | 0;
-                d2 = Math.floor(d2/16);
-            }
-            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-        });
-    }
 
+    // Nice function that i can use to parse some data to always have things uniformed
     parseExersizeBeforeSaving(programToParse: Program) : Program
     {
+        programToParse.version = this.CURRENTVERSION;
+
         programToParse.exesices.forEach(exercises => 
         {   
             // if the resource url contains this then we need to parse the iframe to only obtain the youtube url
@@ -183,7 +157,48 @@ export class CommonService
         return programToParse;
     }
 
-    // dynamic modals will call this function to decide on their with
+    // This function ensures that all the Programs and their exersizes are up-to-date with latests changes.
+    ensureExersizesAreInCorrectFormat(programsToCheck : any) : Program[]
+    {
+        let needUpdate : boolean = false;
+        
+        // Each object is a Program object but at this stage we are not
+        // sure on what version it is so its simpler to use any to avoid possible errors with typescript. 
+        programsToCheck.forEach((currentProgram: any) => 
+        {   
+            // Check if there is a version attribute in the current program,
+            // I have actually seen an isssue where there was a program imported that was in a different version.
+            if(("version" in currentProgram) === false)
+            {
+                currentProgram["version"] = 0;
+                needUpdate = true;
+            }
+
+            if(currentProgram["version"] !== this.CURRENTVERSION)
+            {
+                currentProgram["exesices"].forEach((currentExersize:any) => 
+                {
+                    if(("position" in currentExersize) === false)
+                    {
+                        currentExersize["position"] = 0;
+                    }
+                });
+
+                // At the end set the current version
+                currentProgram["version"] = this.CURRENTVERSION;
+                needUpdate = true;
+            }
+        });
+    
+        if(needUpdate)
+        {
+            localStorage.setItem(this.PROGRAMSKEY,JSON.stringify(programsToCheck));
+        }
+        
+        return programsToCheck;
+    }
+
+    // dynamic modals will call this function to decide on their width
     getWithForModal()
     {
         let widthOfComponent = "90%";
@@ -193,6 +208,23 @@ export class CommonService
         }
 
         return widthOfComponent;
+    }
+
+    // something i got on stakc https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
+    generateUUID() {
+        var d = new Date().getTime();//Timestamp
+        var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16;//random number between 0 and 16
+            if (d > 0) {//Use timestamp until depleted
+                r = (d + r) % 16 | 0;
+                d = Math.floor(d / 16);
+            } else {//Use microseconds since page-load if supported
+                r = (d2 + r) % 16 | 0;
+                d2 = Math.floor(d2 / 16);
+            }
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
     }
 
     // ----------- First Time settings -------------
@@ -211,8 +243,19 @@ export class CommonService
         localStorage.setItem(this.FIRSTTIMEKEY,"true");
     }
 
-    clearFirstimeDone()
+    //--------------- Settings Page related stuff ---------------
+    
+    getDefaultPage(): string 
     {
-        localStorage.removeItem(this.FIRSTTIMEKEY);
+        let defaultPage = localStorage.getItem(this.DEFAULTPAGEKEY);
+        if (defaultPage === null) {
+            return "exercises";
+        }
+        return defaultPage;
+    }
+
+    updateDefaultPage(newDefaultPage: string) 
+    {
+        localStorage.setItem(this.DEFAULTPAGEKEY, newDefaultPage);
     }
 }

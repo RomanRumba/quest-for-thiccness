@@ -43,11 +43,13 @@
         <p-accordion styleClass="customAccordion"  (onOpen)="clearFormData($event)">
             <p-accordionTab *ngFor="let exesices of program.exesices" header="{{getExersizeName(exesices.exesiceID)}}">
                 <div class="col-12 p-0 flex justify-content-end flex-wrap" style="margin-left: 0.7em;">
-                    <div class="col-10 p-0">
-                        <p-toggleButton styleClass="p-button-sm col-12" [(ngModel)]="exesices.isSetBased" onLabel="Set based" offLabel="Time based" onIcon="pi pi-bars" offIcon="pi pi-clock" ></p-toggleButton>
-                    </div>
-                    <div class="col-2 p-0">
+                    <div class="col-12 p-0 mb-2 flex justify-content-end flex-wrap">
+                        <p-button icon="pi pi-arrow-down" styleClass="p-button-sm p-button-info ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
+                        <p-button icon="pi pi-arrow-up" styleClass="p-button-sm p-button-info ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
                         <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
+                    </div>
+                    <div class="col-12 p-0">
+                        <p-toggleButton styleClass="p-button-sm col-12" [(ngModel)]="exesices.isSetBased" onLabel="Set based" offLabel="Time based" onIcon="pi pi-bars" offIcon="pi pi-clock" ></p-toggleButton>
                     </div>
                 </div>
                 <div class="col-12 p-0 mt-4">

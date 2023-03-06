@@ -20,6 +20,7 @@ export class ExcersizeComponent
   private selectedExcersizes: Excersize[] = [];
   
   public program: Program = {
+    version: 0,
     id: "",
     name: "",
     schedule: [],
@@ -29,6 +30,7 @@ export class ExcersizeComponent
   // this object is used to update the sets for the future exersizezes
   // so that the user does not see their changes at the same time
   public programForUpdating : Program = {
+    version: 0,
     id: "",
     name: "",
     schedule: [],

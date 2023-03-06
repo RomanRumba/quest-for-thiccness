@@ -19,6 +19,7 @@ export class ExcersizeformComponent
   public flag: number = 1;
 
   public program: Program = {
+    version: 0,
     id: "",
     name: "",
     schedule: [],
@@ -58,6 +59,7 @@ export class ExcersizeformComponent
       this.selectedExcersizes.forEach((excersize: Excersize) => 
       {
         this.program.exesices.push({
+            position:0,
             resourceUrl: "",
             exesiceID: excersize.id,
             isSetBased: true,

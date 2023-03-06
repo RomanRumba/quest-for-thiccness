@@ -184,7 +184,13 @@ export class ExcersizeComponent
     this.showTimer = true;
     this.isRestTimer = true;
     this.currentMaxRestTime = <number>restTimeInSet?.pause;
-    this.restTimeCounter = 0;
+    this.restTimeCounter = <number>restTimeInSet?.pause;
+
+    // if the user does not want to see the rest timer we just set it as 0
+    if(this.commonService.getDefaultSettingForKey(this.commonService.RESTCLOCKSETTING, "false") === "false")
+    {
+      this.restTimeCounter = 0;
+    }
 
     // Show the form to update the finished set
     this.repsOrMin = <number>restTimeInSet?.repsOrMin;

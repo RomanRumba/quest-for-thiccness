@@ -49,7 +49,7 @@ export class AppComponent
       ];
 
       // If user changed their default page redirect them to sed page
-      let defaultPageCheck = this.commonService.getDefaultPage();
+      let defaultPageCheck = this.commonService.getDefaultSettingForKey(this.commonService.DEFAULTPAGEKEY, "exercises");
       if(defaultPageCheck !== "exercises")
       {
         this.route.navigate(["/"+defaultPageCheck]);

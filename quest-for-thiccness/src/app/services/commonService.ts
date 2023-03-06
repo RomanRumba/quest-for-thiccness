@@ -19,7 +19,8 @@ export class CommonService
     private readonly LASTVERSIONKEY = "MYVERSION";
     private readonly FIRSTTIMEKEY = "MYFIRSTTIME";
     private readonly PROGRAMSKEY = "MYPROGRAMS";
-    private readonly DEFAULTPAGEKEY = "DEFAULTPAGE";
+    public readonly DEFAULTPAGEKEY = "DEFAULTPAGE";
+    public readonly RESTCLOCKSETTING = "MYRESTCLOCK";
 
     private availableExersizes : Excersize[] = [];
     private myPrograms: Program[] | null = null;
@@ -242,17 +243,20 @@ export class CommonService
 
     //--------------- Settings Page related stuff ---------------
     
-    getDefaultPage(): string 
+    getDefaultSettingForKey(key: string, defaultVal: string ): string 
     {
-        let defaultPage = localStorage.getItem(this.DEFAULTPAGEKEY);
-        if (defaultPage === null) {
-            return "exercises";
+        let defaultValueFromStorage = localStorage.getItem(key);
+        if (defaultValueFromStorage === null) {
+            return defaultVal;
         }
-        return defaultPage;
+        return defaultValueFromStorage;
     }
 
-    updateDefaultPage(newDefaultPage: string) 
+    updateValueOfKey(newvalue: string, key: string) 
     {
-        localStorage.setItem(this.DEFAULTPAGEKEY, newDefaultPage);
+        localStorage.setItem(key, newvalue);
     }
+
+    
+    
 }

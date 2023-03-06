@@ -18,6 +18,7 @@ export class SettingsComponent
   public selectedInsultSetting: string | undefined;
   public selectedDefaultPage: string | undefined;
   public customBankUrl: string | undefined;
+  public selectedRestTimeSetting : string | undefined;
 
   constructor(public themeService: ThemeService,
               public insultService: InsultService,
@@ -28,7 +29,8 @@ export class SettingsComponent
   {
     this.selectedTheme = this.themeService.getMyCurrentTheme().themeName;
     this.selectedInsultSetting = this.insultService.isUserAPussy();
-    this.selectedDefaultPage = this.commonService.getDefaultPage();
+    this.selectedDefaultPage = this.commonService.getDefaultSettingForKey(this.commonService.DEFAULTPAGEKEY,"exercises");
+    this.selectedRestTimeSetting = this.commonService.getDefaultSettingForKey(this.commonService.RESTCLOCKSETTING,"true");
   }
 
   // Have to implment the on Destroy because this component

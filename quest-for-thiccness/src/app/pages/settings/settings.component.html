@@ -4,16 +4,30 @@
     </div>
     <div class="col-12 pt-0">
         <div class="field-radiobutton">
-            <p-radioButton name="No" value="exercises" [(ngModel)]="selectedDefaultPage" inputId="defaultpage1" (onClick)="commonService.updateDefaultPage('exercises')"></p-radioButton>
+            <p-radioButton name="No" value="exercises" [(ngModel)]="selectedDefaultPage" inputId="defaultpage1" (onClick)="commonService.updateValueOfKey('exercises',commonService.DEFAULTPAGEKEY)"></p-radioButton>
             <label for="defaultpage1">Exercises</label>
         </div>
         <div class="field-radiobutton">
-            <p-radioButton name="Yes" value="myprograms" [(ngModel)]="selectedDefaultPage" inputId="defaultpage2" (onClick)="commonService.updateDefaultPage('myprograms')"></p-radioButton>
+            <p-radioButton name="Yes" value="myprograms" [(ngModel)]="selectedDefaultPage" inputId="defaultpage2" (onClick)="commonService.updateValueOfKey('myprograms',commonService.DEFAULTPAGEKEY)"></p-radioButton>
             <label for="defaultpage2">My Programs</label>
         </div>
         <div class="field-radiobutton">
-            <p-radioButton name="Yes" value="settings" [(ngModel)]="selectedDefaultPage" inputId="defaultpage3" (onClick)="commonService.updateDefaultPage('settings')"></p-radioButton>
+            <p-radioButton name="Yes" value="settings" [(ngModel)]="selectedDefaultPage" inputId="defaultpage3" (onClick)="commonService.updateValueOfKey('settings',commonService.DEFAULTPAGEKEY)"></p-radioButton>
             <label for="defaultpage3">Settings? (why would you??)</label>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <h2>Show rest timer</h2>
+    </div>
+    <div class="col-12 pt-0">
+        <div class="field-radiobutton">
+            <p-radioButton name="No" value="false" [(ngModel)]="selectedRestTimeSetting" inputId="notoresttimers" (onClick)="commonService.updateValueOfKey('false',commonService.RESTCLOCKSETTING)"></p-radioButton>
+            <label for="notoresttimers">No, dont show rest clock countdown</label>
+        </div>
+        <div class="field-radiobutton">
+            <p-radioButton name="Yes" value="true" [(ngModel)]="selectedRestTimeSetting" inputId="yestTorest" (onClick)="commonService.updateValueOfKey('true',commonService.RESTCLOCKSETTING)"></p-radioButton>
+            <label for="yestTorest">Yes, show rest clock countdown</label>
         </div>
     </div>
 

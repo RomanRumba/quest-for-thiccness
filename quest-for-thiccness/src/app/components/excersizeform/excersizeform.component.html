@@ -40,86 +40,96 @@
         </div>
     </div>
     <div class="col-12 p-0 mt-3">
-        <p-accordion styleClass="customAccordion"  (onOpen)="clearFormData($event)">
-            <p-accordionTab *ngFor="let exesices of program.exesices" header="{{getExersizeName(exesices.exesiceID)}}">
-                <div class="col-12 p-0 flex justify-content-end flex-wrap" style="margin-left: 0.7em;">
-                    <div class="col-12 p-0 mb-2 flex justify-content-end flex-wrap">
-                        <p-button icon="pi pi-arrow-down" styleClass="p-button-sm p-button-info ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
-                        <p-button icon="pi pi-arrow-up" styleClass="p-button-sm p-button-info ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
-                        <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
-                    </div>
-                    <div class="col-12 p-0">
-                        <p-toggleButton styleClass="p-button-sm col-12" [(ngModel)]="exesices.isSetBased" onLabel="Set based" offLabel="Time based" onIcon="pi pi-bars" offIcon="pi pi-clock" ></p-toggleButton>
-                    </div>
-                </div>
-                <div class="col-12 p-0 mt-4">
-                    <div class="grid col-12 p-0 mt-5 ml-4" *ngFor="let currSet of exesices.sets; let i = index">
-                        <div class="col-3 p-0 ml-1 p-float-label">
-                            <input [(ngModel)]="currSet.repsOrMin" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_repsOrMin_{{i}}" class="p-inputtext-sm" pInputText />
-                            <label for="{{exesices.exesiceID}}_repsOrMin_{{i}}" *ngIf=" i === 0">
-                                <span *ngIf="exesices.isSetBased === true; else isMin">Reps</span>
-                                <ng-template #isMin>Min</ng-template>
-                            </label>
+        <p-accordion styleClass="customAccordion" (onOpen)="clearFormData($event)">
+            <p-accordionTab *ngFor="let exesices of program.exesices">
+                <ng-template pTemplate="header" >
+                    <div class="col-12 p-0 flex justify-content-between">
+                        <div class="pt-1">
+                            {{getExersizeName(exesices.exesiceID)}}  
                         </div>
-                        <div class="col-3 p-0  ml-1 p-float-label">
-                            <input [(ngModel)]="currSet.weightOrSec" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_weightOrSec_{{i}}" class="p-inputtext-sm" pInputText />
-                            <label for="{{exesices.exesiceID}}_weightOrSec_{{i}}" *ngIf=" i === 0">
-                                <span *ngIf="exesices.isSetBased === true; else isSec">Weight</span>
-                                <ng-template #isSec>Sec</ng-template>
-                            </label>
-                        </div>
-                        <div class="col-3 p-0 ml-1 p-inputgroup p-float-label">
-                            <input [(ngModel)]="currSet.pause" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_rest_{{i}}" class="p-inputtext-sm" pInputText />
-                            <label for="{{exesices.exesiceID}}_rest_{{i}}" *ngIf=" i === 0">Rest</label>
-                        </div>
-                        <div class="col-2 p-0 ml-1">
-                            <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger" (click)="configDeleteExersizeSet($event,exesices.exesiceID,currSet.setId)"></p-button>
+                        <div class="pr-3">
+                            <p-button icon="pi pi-arrow-up" styleClass="p-button-sm ml-1" (click)="moveExersize($event,exesices.exesiceID,-1);"></p-button>
+                            <p-button icon="pi pi-arrow-down" styleClass="p-button-sm ml-1" (click)="moveExersize($event,exesices.exesiceID,1);"></p-button>
                         </div>
                     </div>
-                </div>
+                </ng-template>
 
-                <div class="col-12 p-0 mt-4">
-                    <div class="grid col-12 p-0 mt-5 ml-4" >
-                        <div class="col-3 p-0 p-float-label ml-1 ">
-                            <input [(ngModel)]="repsOrMin" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_repsOrMin" class="p-inputtext-sm" pInputText />
-                            <label for="{{exesices.exesiceID}}_repsOrMin">
-                                <span *ngIf="exesices.isSetBased === true; else isMinImp">Reps</span>
-                                <ng-template #isMinImp>Min</ng-template>
-                            </label>
+                <ng-template pTemplate="content">
+                    <div class="col-12 p-0 flex justify-content-end flex-wrap" style="margin-left: 0.7em;">
+                        <div class="col-10 p-0">
+                            <p-toggleButton styleClass="p-button-sm col-12" [(ngModel)]="exesices.isSetBased" onLabel="Set based" offLabel="Time based" onIcon="pi pi-bars" offIcon="pi pi-clock" ></p-toggleButton>
                         </div>
-                        <div class="col-3 p-0 p-float-label ml-1">
-                            <input [(ngModel)]="weightOrSec" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_weightOrSec" class="p-inputtext-sm" pInputText />
-                            <label for="{{exesices.exesiceID}}_weightOrSec">
-                                <span *ngIf="exesices.isSetBased === true; else isSecImp">Weight</span>
-                                <ng-template #isSecImp>Sec</ng-template>
-                            </label>
-                        </div>
-                        <div class="col-3 p-0 p-float-label ml-1">
-                            <input [(ngModel)]="rest" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_rest" class="p-inputtext-sm" pInputText />
-                            <label for="{{exesices.exesiceID}}_rest">Rest</label>
-                        </div>
-                        <div class="col-2 p-0 ml-1">
-                            <p-button (onClick)="addNewSet(exesices.exesiceID)" icon="pi pi-plus" styleClass="p-button-sm p-button-success"></p-button>
+                        <div class="col-2 p-0">
+                            <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger ml-1" (click)="deleteExersize($event,exesices.exesiceID)"></p-button>
                         </div>
                     </div>
-                    <div class="col-12 p-0 mt-5">
-                        <span class="p-float-label">
-                            <textarea  [(ngModel)]="exesices.notes" style="width: 100%;" id="{{exesices.exesiceID}}_notes" rows="3" pInputTextarea [autoResize]="true"></textarea>
-                            <label for="{{exesices.exesiceID}}_notes">Notes</label>
+                    <div class="col-12 p-0 mt-4">
+                        <div class="grid col-12 p-0 mt-5 ml-4" *ngFor="let currSet of exesices.sets; let i = index">
+                            <div class="col-3 p-0 ml-1 p-float-label">
+                                <input [(ngModel)]="currSet.repsOrMin" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_repsOrMin_{{i}}" class="p-inputtext-sm" pInputText />
+                                <label for="{{exesices.exesiceID}}_repsOrMin_{{i}}" *ngIf=" i === 0">
+                                    <span *ngIf="exesices.isSetBased === true; else isMin">Reps</span>
+                                    <ng-template #isMin>Min</ng-template>
+                                </label>
+                            </div>
+                            <div class="col-3 p-0  ml-1 p-float-label">
+                                <input [(ngModel)]="currSet.weightOrSec" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_weightOrSec_{{i}}" class="p-inputtext-sm" pInputText />
+                                <label for="{{exesices.exesiceID}}_weightOrSec_{{i}}" *ngIf=" i === 0">
+                                    <span *ngIf="exesices.isSetBased === true; else isSec">Weight</span>
+                                    <ng-template #isSec>Sec</ng-template>
+                                </label>
+                            </div>
+                            <div class="col-3 p-0 ml-1 p-inputgroup p-float-label">
+                                <input [(ngModel)]="currSet.pause" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_rest_{{i}}" class="p-inputtext-sm" pInputText />
+                                <label for="{{exesices.exesiceID}}_rest_{{i}}" *ngIf=" i === 0">Rest</label>
+                            </div>
+                            <div class="col-2 p-0 ml-1">
+                                <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger" (click)="configDeleteExersizeSet($event,exesices.exesiceID,currSet.setId)"></p-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0 mt-4">
+                        <div class="grid col-12 p-0 mt-5 ml-4" >
+                            <div class="col-3 p-0 p-float-label ml-1 ">
+                                <input [(ngModel)]="repsOrMin" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_repsOrMin" class="p-inputtext-sm" pInputText />
+                                <label for="{{exesices.exesiceID}}_repsOrMin">
+                                    <span *ngIf="exesices.isSetBased === true; else isMinImp">Reps</span>
+                                    <ng-template #isMinImp>Min</ng-template>
+                                </label>
+                            </div>
+                            <div class="col-3 p-0 p-float-label ml-1">
+                                <input [(ngModel)]="weightOrSec" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_weightOrSec" class="p-inputtext-sm" pInputText />
+                                <label for="{{exesices.exesiceID}}_weightOrSec">
+                                    <span *ngIf="exesices.isSetBased === true; else isSecImp">Weight</span>
+                                    <ng-template #isSecImp>Sec</ng-template>
+                                </label>
+                            </div>
+                            <div class="col-3 p-0 p-float-label ml-1">
+                                <input [(ngModel)]="rest" min="0" style="width: 100%;" type="number" id="{{exesices.exesiceID}}_rest" class="p-inputtext-sm" pInputText />
+                                <label for="{{exesices.exesiceID}}_rest">Rest</label>
+                            </div>
+                            <div class="col-2 p-0 ml-1">
+                                <p-button (onClick)="addNewSet(exesices.exesiceID)" icon="pi pi-plus" styleClass="p-button-sm p-button-success"></p-button>
+                            </div>
+                        </div>
+                        <div class="col-12 p-0 mt-5">
+                            <span class="p-float-label">
+                                <textarea  [(ngModel)]="exesices.notes" style="width: 100%;" id="{{exesices.exesiceID}}_notes" rows="3" pInputTextarea [autoResize]="true"></textarea>
+                                <label for="{{exesices.exesiceID}}_notes">Notes</label>
+                            </span>
+                        </div>
+                        <div class="col-12 p-0 mt-2">
+                            <p-message severity="info" icon="pi pi-info-circle" text="If you don't like the images below, you can Copy-paste an URL to a GIF, Image, or a youtube video (NOTE: use Embed copy!) and that content will appear instead in your program" styleClass="col-12"></p-message>
+                        </div>
+                        <span class="col-12 p-0 p-float-label mt-1">
+                            <input style="width: 100%;" type="text" id="resourceUrl" pInputText [(ngModel)]="exesices.resourceUrl" autocomplete="off"> 
+                            <label for="resourceUrl">Resource Url</label>
                         </span>
+                        <div class="col-12 p-0 mt-2" *ngIf="currentImgToRotate">
+                            <img width="100%" height="200px" style="object-fit: cover" src="{{currentImgToRotate}}">
+                        </div>
                     </div>
-                    <div class="col-12 p-0 mt-2">
-                        <p-message severity="info" icon="pi pi-info-circle" text="If you don't like the images below, you can Copy-paste an URL to a GIF, Image, or a youtube video (NOTE: use Embed copy!) and that content will appear instead in your program" styleClass="col-12"></p-message>
-                    </div>
-                    <span class="col-12 p-0 p-float-label mt-1">
-                        <input style="width: 100%;" type="text" id="resourceUrl" pInputText [(ngModel)]="exesices.resourceUrl" autocomplete="off"> 
-                        <label for="resourceUrl">Resource Url</label>
-                    </span>
-                    <div class="col-12 p-0 mt-2" *ngIf="currentImgToRotate">
-                        <img width="100%" height="200px" style="object-fit: cover" src="{{currentImgToRotate}}">
-                    </div>
-                </div>
-
+                </ng-template>
             </p-accordionTab>
         </p-accordion>
     </div>

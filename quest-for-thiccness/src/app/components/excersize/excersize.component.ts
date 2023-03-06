@@ -184,7 +184,7 @@ export class ExcersizeComponent
     this.showTimer = true;
     this.isRestTimer = true;
     this.currentMaxRestTime = <number>restTimeInSet?.pause;
-    this.restTimeCounter = <number>restTimeInSet?.pause;
+    this.restTimeCounter = 0;
 
     // Show the form to update the finished set
     this.repsOrMin = <number>restTimeInSet?.repsOrMin;

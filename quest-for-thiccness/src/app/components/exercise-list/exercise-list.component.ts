@@ -38,7 +38,6 @@ export class ExerciseListComponent
       }
       programToAddExcersizesTo?.exesices.push(
       {
-        position: 0,
         resourceUrl: "",
         exesiceID: excerizeToAdd.id,
         isSetBased: true,

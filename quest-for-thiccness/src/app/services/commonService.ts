@@ -176,13 +176,10 @@ export class CommonService
 
             if(currentProgram["version"] !== this.CURRENTVERSION)
             {
-                currentProgram["exesices"].forEach((currentExersize:any) => 
+                /*currentProgram["exesices"].forEach((currentExersize:any) => 
                 {
-                    if(("position" in currentExersize) === false)
-                    {
-                        currentExersize["position"] = 0;
-                    }
-                });
+                
+                });*/
 
                 // At the end set the current version
                 currentProgram["version"] = this.CURRENTVERSION;

@@ -9,3 +9,8 @@
 {
     border: none !important;
 }
+
+:host::ng-deep  .p-accordion-tab > .p-disabled, .p-disabled *
+{
+    cursor: default !important;
+}

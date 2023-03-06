@@ -38,6 +38,7 @@ export class ExcersizeformComponent
   public currentImgToRotate: string | undefined;
   public rotateRef : any;
 
+  public reorderToggle : boolean = true;
   constructor(private commonService: CommonService,
               private ref: DynamicDialogRef, 
               private config: DynamicDialogConfig,
@@ -59,7 +60,6 @@ export class ExcersizeformComponent
       this.selectedExcersizes.forEach((excersize: Excersize) => 
       {
         this.program.exesices.push({
-            position:0,
             resourceUrl: "",
             exesiceID: excersize.id,
             isSetBased: true,
@@ -70,7 +70,7 @@ export class ExcersizeformComponent
     }
     else if(this.flag === 2)
     {
-      this.closingLabel = "Close";
+      this.closingLabel = "Discard";
       this.program = this.config.data.program;
     }
   }
@@ -142,6 +142,26 @@ export class ExcersizeformComponent
     }
   }
 
+  // will shift the exersize in programs based on direction
+  moveExersize(event: any, excerizeId: string, direction: -1 | 1)
+  {
+    let exersizeIndexInProgram = this.program.exesices.findIndex(e => e.exesiceID === excerizeId);
+
+    if( exersizeIndexInProgram !== -1 && 
+       !(exersizeIndexInProgram === 0 && direction === -1) &&
+       !(exersizeIndexInProgram === this.program.exesices.length -1 && direction === 1))
+    {
+      let tempSwapStorage = this.program.exesices[exersizeIndexInProgram];
+      let tempSwapStorage2 = this.selectedExcersizes[exersizeIndexInProgram];
+      
+      this.program.exesices[exersizeIndexInProgram] = this.program.exesices[exersizeIndexInProgram+direction];
+      this.program.exesices[exersizeIndexInProgram+direction] = tempSwapStorage;
+
+      this.selectedExcersizes[exersizeIndexInProgram] = this.selectedExcersizes[exersizeIndexInProgram+direction];
+      this.selectedExcersizes[exersizeIndexInProgram+direction] = tempSwapStorage2;
+    }
+  }
+
   // is called when user changed exersizes
   clearFormData(event: any)
   {
@@ -184,7 +204,6 @@ export class ExcersizeformComponent
           {
             exersizeInProgram.sets.splice(setToDelete,1);
           }
-          
         }
       },
       reject: () => {

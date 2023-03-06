@@ -6,7 +6,6 @@ export interface Program
     schedule: string[],
     exesices:
     {
-        position: number;
         resourceUrl: string,
         exesiceID: string,
         isSetBased: boolean,

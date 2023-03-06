@@ -257,6 +257,4 @@ export class CommonService
         localStorage.setItem(key, newvalue);
     }
 
-    
-    
 }

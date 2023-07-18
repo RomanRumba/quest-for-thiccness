@@ -1,8 +1,18 @@
 .stikky-action
 { 
     position:fixed;
-    left: 80vw;
-    top: 60%;
+    left: 93vw;
+    top: 70%;
+}
+
+@media only screen and (max-width: 960px) 
+{
+    .stikky-action
+    { 
+        position:fixed;
+        left: 80vw;
+        top: 60%;
+    }
 }
 
 .excersize-container

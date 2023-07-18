@@ -34,6 +34,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {KnobModule} from 'primeng/knob';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {SelectButtonModule} from 'primeng/selectbutton';
+import { FileUploadModule } from 'primeng/fileupload';
 
 // my imports
 import { AppComponent } from './app.component';
@@ -93,7 +94,8 @@ import { ExerciseListComponent } from './components/exercise-list/exercise-list.
     ProgressSpinnerModule,
     KnobModule,
     RadioButtonModule,
-    SelectButtonModule
+    SelectButtonModule,
+    FileUploadModule
   ],
   providers: [CommonService],
   bootstrap: [AppComponent]

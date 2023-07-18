@@ -12,9 +12,9 @@ export class CommonService
 {
     private readonly CURRENTVERSION = 1.3; 
 
-    public readonly BASEULR = "http://192.168.50.130:4200/";// "https://romanrumba.github.io/quest-for-thiccness/";
-    public readonly EXERSIZEDBURL = "http://192.168.50.130:4200/assets/exercises.json"; //"https://romanrumba.github.io/quest-for-thiccness/assets/exercises.json"
-    public readonly RESOURCEURL = "http://192.168.50.130:4200/assets/"; //"https://raw.githubusercontent.com/RomanRumba/quest-for-thiccness/prod/assets/";
+    public readonly BASEULR = "http://192.168.50.146:4200/";// "https://romanrumba.github.io/quest-for-thiccness/";
+    public readonly EXERSIZEDBURL = "http://192.168.50.146:4200/assets/exercises.json"; //"https://romanrumba.github.io/quest-for-thiccness/assets/exercises.json"
+    public readonly RESOURCEURL = "http://192.168.50.146:4200/assets/"; //"https://raw.githubusercontent.com/RomanRumba/quest-for-thiccness/prod/assets/";
 
     private readonly LASTVERSIONKEY = "MYVERSION";
     private readonly FIRSTTIMEKEY = "MYFIRSTTIME";

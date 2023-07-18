@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="grid ml-1">
     <div class="col-12">
         <h2>Default starting page</h2>
@@ -55,19 +56,15 @@
         </div>
     </div>
 
-    <!--
     <div class="col-12">
-        <div class="col-12 p-0">
-            <h2>Custom Exercises bank</h2>
-            <div style="width: 95%;">
-                <p-message icon="pi pi-info-circle" severity="info" text="This is for advanced users!! You can create your own 
-                exercise bank and then Copy-paste the link to that bank here, the system will attempt to fetch that bank instead of the default one" styleClass="col-12"></p-message>   
-            </div>
+        <h2>Export / Import Programs</h2>
+        <div class="col-12 md:col-7 lg:col-4 p-0 pr-1">
+            <p-message icon="pi pi-info-circle" severity="info" text="You can export your programs from one device and then import them into another with a simple click of a button!" styleClass="col-12"></p-message>   
         </div>
-        <span class="col-12 p-0 p-float-label mt-4">
-            <input style="width: 95%;" type="text" id="programName" pInputText (change)="test()"> 
-            <label for="programName">Link to bank</label>
-        </span>
     </div>
-    -->
+    <div class="col-12 pt-0">
+        <p-button icon="pi pi-file-export" label="Export My Program" styleClass="p-button-outlined mr-3" (onClick)="exportMyProgram()"></p-button>
+        <p-fileUpload #fileInput chooseIcon="pi pi-file-import" styleClass="p-button-outlined mt-2" mode="basic" chooseLabel="Import Program" accept="application/json" (onSelect)="importProgram($event)"></p-fileUpload>
+    </div>
+
 </div>

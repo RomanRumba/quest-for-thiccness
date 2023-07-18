@@ -10,7 +10,7 @@ import { Program } from '../models/program';
 })
 export class CommonService 
 {
-    private readonly CURRENTVERSION = 1.3; 
+    private readonly CURRENTVERSION = 1.4; 
 
     public readonly BASEULR = "http://192.168.50.146:4200/";// "https://romanrumba.github.io/quest-for-thiccness/";
     public readonly EXERSIZEDBURL = "http://192.168.50.146:4200/assets/exercises.json"; //"https://romanrumba.github.io/quest-for-thiccness/assets/exercises.json"

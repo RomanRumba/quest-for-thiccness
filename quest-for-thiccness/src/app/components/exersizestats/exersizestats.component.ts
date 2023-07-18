@@ -76,10 +76,9 @@ export class ExersizestatsComponent
           min: 0,
           max: maxvalPrimarySet >= maxvalSecondarySet?  maxvalPrimarySet : maxvalSecondarySet,
           beginAtZero: true,
-          stepSize: 2,
           angleLines: {
             color: "red",
-         },
+         }
        }
       }
     };

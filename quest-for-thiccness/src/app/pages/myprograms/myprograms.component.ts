@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { ExcersizeComponent } from 'src/app/components/excersize/excersize.component';
 import { ExcersizeformComponent } from 'src/app/components/excersizeform/excersizeform.component';
+import { ExersizestatsComponent } from 'src/app/components/exersizestats/exersizestats.component';
 import { ExcersizeformConfig } from 'src/app/models/modals/ExcersizeformConfig';
 import { Program } from 'src/app/models/program';
 import { CommonService } from 'src/app/services/commonService';
@@ -19,6 +20,7 @@ export class MyprogramsComponent
   // Reference to the popup component 
   private refToExersizeForm: DynamicDialogRef | undefined;
   private refToExersizeStarter: DynamicDialogRef | undefined;
+  private refToExersizeStats: DynamicDialogRef | undefined;
   // Reference to the table in PrimeNG 
   @ViewChild('dt') dt: Table | undefined;
   // Contains the available commands in the speed dial component
@@ -115,6 +117,31 @@ export class MyprogramsComponent
     });
 
     this.refToExersizeStarter.onClose.subscribe((product) =>
+    {
+
+    });
+  }
+
+  async showStatsForProgram(id: string)
+  {
+    let programToGetStatsFor = this.myPrograms.find(t => t.id === id);
+    
+    this.refToExersizeStats = this.dialogService.open(ExersizestatsComponent, {
+      header: "Statistics for " + programToGetStatsFor?.name,
+      closable: true, 
+      width: this.commonService.getWithForModal(),
+      contentStyle: {"overflow": "auto", 'padding':'0em'},
+      baseZIndex: 10000,
+      maximizable: true,
+      data: 
+      <ExcersizeformConfig><unknown>{
+        flag: 0, // we reuse the ExcersizeformConfig but we do not need the flag
+        excersizes: await this.commonService.getExcersizesInProgram(id),
+        program: programToGetStatsFor
+      }
+    });
+
+    this.refToExersizeStats.onClose.subscribe((product) =>
     {
 
     });

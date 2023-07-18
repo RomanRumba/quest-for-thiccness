@@ -26,6 +26,7 @@
                     <span>
                         <p-button (click)="startProgram(excersize.id)"  styleClass="p-button-sm p-button-success" icon="pi pi-flag"></p-button>
                         <p-button (click)="updateProgram(excersize.id)" styleClass="p-button-sm ml-1" icon="pi pi-file-edit"></p-button>
+                        <p-button (click)="showStatsForProgram(excersize.id)" styleClass="p-button-sm ml-1 p-button-warning" icon="pi pi-chart-bar"></p-button>
                         <p-button (click)="confirmDelete($event, excersize.id)" styleClass="p-button-sm ml-1 p-button-danger" icon="pi pi-trash"></p-button>
                     </span>
                 </td>

@@ -35,6 +35,7 @@ import {KnobModule} from 'primeng/knob';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ChartModule } from 'primeng/chart';
 
 // my imports
 import { AppComponent } from './app.component';
@@ -46,6 +47,7 @@ import { ExcersizeComponent } from './components/excersize/excersize.component';
 import { VirginComponent } from './components/virgin/virgin.component';
 import { WhyareufragileComponent } from './components/whyareufragile/whyareufragile.component';
 import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
+import { ExersizestatsComponent } from './components/exersizestats/exersizestats.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { ExerciseListComponent } from './components/exercise-list/exercise-list.
     ExcersizeComponent,
     VirginComponent,
     WhyareufragileComponent,
-    ExerciseListComponent
+    ExerciseListComponent,
+    ExersizestatsComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +98,8 @@ import { ExerciseListComponent } from './components/exercise-list/exercise-list.
     KnobModule,
     RadioButtonModule,
     SelectButtonModule,
-    FileUploadModule
+    FileUploadModule,
+    ChartModule
   ],
   providers: [CommonService],
   bootstrap: [AppComponent]
